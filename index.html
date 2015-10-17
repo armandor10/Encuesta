@@ -12,6 +12,10 @@
 
       <style type="text/css">
 
+          body{
+            overflow-y:hidden; 
+          }
+
          .material-icons {
             color: white;
           }
@@ -21,8 +25,14 @@
           }
 
           .angular-google-map-container { 
-            height: 647px; // Or whatever pixel value you require :)
+            height: 100vh /*647px; // Or whatever pixel value you require :)*/
           }
+
+          /*.angular-google-map,
+          .angular-google-map-container {
+            width: 100%;
+            height: 100%;
+          }*/
 
       </style>
       
@@ -38,7 +48,7 @@
       <!-- Page Layout here -->
       <div class="row">
 
-        <div class="col s4">
+        <div class="col s12 m4 l4" >
 
           <div class="card-panel blue lighten-2">
 
@@ -60,13 +70,13 @@
           
         </div>
 
-        <div class="container col s8 " >
+        <div class="container col s12 m8 l8" >
           <!-- Teal page content  -->
           <div ng-controller="MapsController">
-              <ui-gmap-google-map center="map.center" options="options" zoom="map.zoom"></ui-gmap-google-map>             
-          </div>           
+              <ui-gmap-google-map center="map.center" options="options" zoom="map.zoom">
 
-          {{title}}
+            </ui-gmap-google-map>             
+          </div> 
 
         </div>
 
