@@ -38,7 +38,7 @@
       
       <script src='js/vendor/lodash.min.js'></script>
       <script src="js/vendor/angular.min.js"></script>
-      <!--script src='js/vendor/angular-simple-logger/dist/index.js'></script-->
+      <script src='js/vendor/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
       <script src='js/vendor/angular-google-maps.min.js'></script>
 
     </head>
@@ -50,21 +50,21 @@
 
         <div class="col s12 m4 l4" >
 
-          <div class="card-panel blue lighten-2">
+          <div class="card-panel blue lighten-2" ng-controller="MainController">
 
             <div class="card-content white-text">
               <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+              <a id="mainselected"></a>
               <a href="#" class="right"><i class="material-icons">more_vert</i></a>
               <a href="#" class="right"><i class="material-icons">search</i></a>
             </div>
 
-            <!-- Grey navigation panel -->         
-
-              
-              <ul id="slide-out" class="side-nav" style="width: 240px;">
-                <li><a href="#!">First Sidebar Link</a></li>
-                <li><a href="#!">Second Sidebar Link</a></li>
-              </ul>              
+            <!-- Grey navigation panel -->
+              <ul id="slide-out" class="side-nav" style="width: 240px;" >
+                <li ng-repeat="m in main">
+                  <a href="{{m.path}}" ng-click="mainDisplay($this)">{{m.display}}</a>
+                </li>
+              </ul>   
 
           </div>          
           
@@ -73,7 +73,15 @@
         <div class="container col s12 m8 l8" >
           <!-- Teal page content  -->
           <div ng-controller="MapsController">
-              <ui-gmap-google-map center="map.center" options="options" zoom="map.zoom">
+              <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+
+                  <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeClick="map.window.closeClick()">
+                      <div style="color: black">
+                          {{map.window.title}}
+                      </div>
+                  </ui-gmap-window>
+                  <ui-gmap-markers idkey="marker.id" models="map.markers" coords="'self'" doCluster="false"  icon="'icon'" events="map.markersEvents " options="map.options"></ui-gmap-markers>
+
 
             </ui-gmap-google-map>             
           </div> 
@@ -96,6 +104,7 @@
       <script src="js/services/MapsService.js"></script>
 
       <!-- Controllers -->
+      <script src="js/controllers/MainController.js"></script>
       <script src="js/controllers/MapsController.js"></script>
 
       <script type="text/javascript">
