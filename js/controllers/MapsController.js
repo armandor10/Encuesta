@@ -99,10 +99,44 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
       }
     ];*/
 
-    var markerseleted;
+    $scope.markerseleted=null;
+    $scope.modelseleted;
+    $scope.markers = [
+                {
+                    id: 1,
+                    latitude: 10.469635,
+                    longitude: -73.253994,
+                    title: 'Servipan SAS',
+                    address:'Cll 4 No 44-67',
+                    nameOwner:"Mario Castillo Andrade",
+                    phone:"5556767",
+                    activity:"Comercio"
+                },
+                {
+                    id: 2,
+                    latitude: 10.459235,
+                    longitude: -73.253802,
+                    title: 'Proviciones Don Juan',
+                    address:'Cll 4 No 44-67',
+                    nameOwner:"Carlos Pulgarin Reyes",
+                    phone:"5556768",
+                    activity:"Industria"
+                },
+                {
+                    id: 3,
+                    latitude: 10.469832,
+                    longitude: -73.263902,
+                    title: 'Restaurante Yeyo',
+                    address:'Cll 4 No 44-67',
+                    nameOwner:"Keiner Valencia Paez",
+                    phone:"5556766",
+                    activity:"Servicio"
+                }];
+
+    $('.collapsible').collapsible();
 
 
-var data = {};
+        var data = {};
 
         data.map = {
             zoom: 14,
@@ -113,37 +147,18 @@ var data = {};
             options:{
               scrollwheel: false
             },
-            markers: [
-                {
-                    id: 1,
-                    latitude: 10.469635,
-                    longitude: -73.253994,
-                    title: 'This is where you are',
-                    address:'Cll 4 No 44-67'
-                },
-                {
-                    id: 2,
-                    latitude: 10.459235,
-                    longitude: -73.253802,
-                    title: 'Job Site',
-                    address:'Cll 4 No 44-67'
-                },
-                {
-                    id: 3,
-                    latitude: 10.469832,
-                    longitude: -73.263902,
-                    title: 'Airport',
-                    address:'Cll 4 No 44-67'
-                }],
             markersEvents: {
                 click: function(marker, eventName, model, arguments) {
                     console.log('Marker was clicked (' + marker + ', ' + eventName);//+', '+mydump(model, 0)+', '+mydump(arguments)+')');
                     $scope.map.window.model = model;
                     $scope.map.window.title = model.title;
                     $scope.map.window.show = true;
-                    markerseleted = model;
-                    //alert(JSON.stringify(markerseleted));
+                    
+                    //alert(JSON.stringify(model));
                     toggleBounce(marker);
+                    $scope.modelselected = model;
+                    
+                    $('.collapsible').collapsible();
                 }
             },
             window: {
@@ -170,16 +185,24 @@ var data = {};
         };
 
         function toggleBounce(marker) {
-          if (marker.getAnimation() !== null) {
+          if($scope.markerseleted != null){
+            $scope.markerseleted.setAnimation(null);
+          }          
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          $scope.markerseleted = marker;
+
+          /*if (marker.getAnimation() !== null) {
             marker.setAnimation(null);
           } else {
             marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-        }
+          }*/
+        };
+
+        data.map.markers = $scope.markers;
 
         $scope.map = data.map;
 
-       
+        
 
 });
 });

@@ -54,7 +54,7 @@
 
             <div class="card-content white-text">
               <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
-              <a id="mainselected"></a>
+              <span class="card-title white-text">{{ mainselected }}</span>              
               <a href="#" class="right"><i class="material-icons">more_vert</i></a>
               <a href="#" class="right"><i class="material-icons">search</i></a>
             </div>
@@ -62,9 +62,38 @@
             <!-- Grey navigation panel -->
               <ul id="slide-out" class="side-nav" style="width: 240px;" >
                 <li ng-repeat="m in main">
-                  <a href="{{m.path}}" ng-click="mainDisplay($this)">{{m.display}}</a>
+                  <a href="{{m.path}}" ng-click="mainDisplay($index)">{{m.display}}</a>
                 </li>
               </ul>   
+
+          </div>
+
+          <div class="container" id="contenedor" style="width:100%" ng-controller="MapsController">
+
+              <!--ul class="collection">
+                <li class="collection-item avatar" ng-repeat="m in markers">
+                  <a href="#!" ><i class="tiny material-icons circle blue lighten-2">visibility</i></a>
+                  <span class="title"><strong>{{m.title}}</strong> </span>
+                  <p>Propietario: {{m.nameOwner}} <br>
+                     Dirección: {{m.address}}<br>
+                     Telefono: {{m.phone}}<br>
+                     Actividad: {{m.activity}}
+                  </p>                
+                </li>
+              </ul-->
+
+                <ul class="collapsible popout" data-collapsible="accordion">
+                  <li ng-repeat="m in markers">
+                    <div class="collapsible-header"><i class="material-icons" style="color: #1E90FF;">visibility</i><strong>{{m.title}}</strong></div>
+                    <div class="collapsible-body">
+                      <p>Propietario: {{m.nameOwner}} <br>
+                      Dirección: {{m.address}}<br>
+                      Telefono: {{m.phone}}<br>
+                      Actividad: {{m.activity}}
+                      </p> 
+                    </div>
+                  </li>
+                </ul>
 
           </div>          
           
@@ -115,7 +144,13 @@
                 edge: 'left', // Choose the horizontal origin
                 closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
               }
-            );          
+            );
+
+             $('.collapsible').collapsible({
+                accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+             });  
+       
+             //$('.collapsible').collapsible();       
 
 
         });

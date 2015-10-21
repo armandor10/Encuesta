@@ -1,5 +1,7 @@
 app.controller('MainController', ['$scope', function($scope) { 
   
+  $scope.mainselected = "";
+
   $scope.main = [
                   {
                     display:'Gestión de Establecimiento',
@@ -7,7 +9,7 @@ app.controller('MainController', ['$scope', function($scope) {
                   },
                   {
                     display:'Gestión de Encuesta',
-                    path:'#'
+                    path:'#!'
                   },
                   {
                     display:'Encuestador',
@@ -15,9 +17,13 @@ app.controller('MainController', ['$scope', function($scope) {
                   }
                 ];
 
-  $scope.mainDisplay = function(m){
-    console.log(m);
-    //$('#mainselected').val(m.display);
+  $scope.mainDisplay = function(index){
+    //console.log($scope.main[index]);
+    //alert($scope.main[index].display);
+    //$('#mainselected').val($scope.main[index].display);
+    $scope.mainselected = $scope.main[index].display;
+    //alert(mainselected);
+    //$scope.$apply();
   }
 
 }]);
