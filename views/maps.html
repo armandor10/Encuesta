@@ -1,0 +1,52 @@
+      <div class="row">
+        <div class="col s12 m4 l4" >          
+
+          <div class="container" id="contenedor" style="width:100%;margin-top: 100px;" >
+
+              <!--ul class="collection">
+                <li class="collection-item avatar" ng-repeat="m in markers">
+                  <a href="#!" ><i class="tiny material-icons circle blue lighten-2">visibility</i></a>
+                  <span class="title"><strong>{{m.title}}</strong> </span>
+                  <p>Propietario: {{m.nameOwner}} <br>
+                     Dirección: {{m.address}}<br>
+                     Telefono: {{m.phone}}<br>
+                     Actividad: {{m.activity}}
+                  </p>                
+                </li>
+              </ul-->
+
+                <ul class="collapsible popout" data-collapsible="accordion">
+                  <li ng-repeat="m in map.markers" map-repeat-directive>
+                    <div class="collapsible-header" ng-click="listClickEvent($index)"><i class="material-icons" style="color: #1E90FF;">visibility</i><strong>{{m.title}}</strong></div>
+                    <div class="collapsible-body">
+                      <p>Propietario: {{m.nameOwner}} <br>
+                      Dirección: {{m.address}}<br>
+                      Telefono: {{m.phone}}<br>
+                      Actividad: {{m.activity}}
+                      </p> 
+                    </div>
+                  </li>
+                </ul>
+
+          </div>          
+          
+        </div>
+
+        <div class="container col s12 m8 l8" >
+          <!-- Teal page content  -->
+          <div >
+              <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+
+                  <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeClick="map.window.closeClick()">
+                      <div style="color: black">
+                          {{map.window.title}}
+                      </div>
+                  </ui-gmap-window>
+                  <ui-gmap-markers idkey="marker.id" models="map.markers" coords="'self'" doCluster="false"  icon="'icon'" events="map.markersEvents " options="map.options"></ui-gmap-markers>
+
+
+            </ui-gmap-google-map>             
+          </div> 
+
+        </div>
+      </div>

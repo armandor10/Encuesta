@@ -1,4 +1,15 @@
-var app = angular.module("myApp", ['uiGmapgoogle-maps']);
+var app = angular.module("myApp", ['ngRoute','uiGmapgoogle-maps']);
+
+app.config(function($routeProvider) {
+  $routeProvider
+   .when('/', {
+    controller: 'MapsController',
+    templateUrl: 'views/maps.html'
+  })
+  .otherwise({
+    redirectTo: '/'
+  });
+});
 
 app.config(function(uiGmapGoogleMapApiProvider) {
  uiGmapGoogleMapApiProvider.configure({

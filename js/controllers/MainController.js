@@ -5,11 +5,11 @@ app.controller('MainController', ['$scope', function($scope) {
   $scope.main = [
                   {
                     display:'Gestión de Establecimiento',
-                    path:'#'
+                    path:'#/'
                   },
                   {
                     display:'Gestión de Encuesta',
-                    path:'#!'
+                    path:'#'
                   },
                   {
                     display:'Encuestador',

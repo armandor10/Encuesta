@@ -133,8 +133,6 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     activity:"Servicio"
                 }];
 
-    $('.collapsible').collapsible();
-
 
         var data = {};
 
@@ -158,7 +156,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     toggleBounce(marker);
                     $scope.modelselected = model;
                     
-                    $('.collapsible').collapsible();
+                    //$('.collapsible').collapsible();
                 }
             },
             window: {
@@ -198,9 +196,17 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
           }*/
         };
 
+
+
         data.map.markers = $scope.markers;
 
         $scope.map = data.map;
+
+         $scope.listClickEvent = function (index){
+          //alert("Entro");
+          console.log($scope.map.markers[index]);
+          toggleBounce($scope.map.markers[index]);
+        }
 
         
 
