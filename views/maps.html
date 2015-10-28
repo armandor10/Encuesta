@@ -14,10 +14,10 @@
                   </p>                
                 </li>
               </ul-->
-
-                <ul class="collapsible popout" data-collapsible="accordion">
-                  <li ng-repeat="m in map.markers" map-repeat-directive>
-                    <div class="collapsible-header" ng-click="listClickEvent($index)"><i class="material-icons" style="color: #1E90FF;">visibility</i><strong>{{m.title}}</strong></div>
+                <input type="search" ng-model="q" placeholder="Buscar..." aria-label="filter friends" />
+                <ul class="collapsible popout example-animate-container" data-collapsible="accordion">
+                  <li ng-repeat="m in map.markers | filter:q as results" map-repeat-directive class="animate-repeat">
+                    <div id="C{{m.id}}" class="collapsible-header" ng-click="listClickEvent($index)"><i class="material-icons" style="color: #1E90FF;">visibility</i><strong>{{m.title}}</strong></div>
                     <div class="collapsible-body">
                       <p>Propietario: {{m.nameOwner}} <br>
                       Dirección: {{m.address}}<br>
@@ -25,6 +25,9 @@
                       Actividad: {{m.activity}}
                       </p> 
                     </div>
+                  </li>
+                  <li class="animate-repeat" ng-if="results.length == 0">
+                    <strong>No encontrado...</strong>
                   </li>
                 </ul>
 
@@ -42,10 +45,10 @@
                           {{map.window.title}}
                       </div>
                   </ui-gmap-window>
-                  <ui-gmap-markers idkey="marker.id" models="map.markers" coords="'self'" doCluster="false"  icon="'icon'" events="map.markersEvents " options="map.options"></ui-gmap-markers>
+                  <ui-gmap-markers idkey="marker.id" models="map.markers" coords="'self'" doCluster="false"  icon="'icon'" events="map.markersEvents " options="map.options" control="markerControl"></ui-gmap-markers>
 
 
-            </ui-gmap-google-map>             
+              </ui-gmap-google-map>             
           </div> 
 
         </div>

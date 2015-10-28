@@ -110,7 +110,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     address:'Cll 4 No 44-67',
                     nameOwner:"Mario Castillo Andrade",
                     phone:"5556767",
-                    activity:"Comercio"
+                    activity:"Comercio",
                 },
                 {
                     id: 2,
@@ -135,6 +135,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
 
 
         var data = {};
+        $scope.markerControl = {};
 
         data.map = {
             zoom: 14,
@@ -153,9 +154,11 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     $scope.map.window.show = true;
                     
                     //alert(JSON.stringify(model));
+                    console.log(marker);
                     toggleBounce(marker);
                     $scope.modelselected = model;
-                    
+                    //alert('C'+model.id);
+                    $('#C'+ model.id).trigger('click');
                     //$('.collapsible').collapsible();
                 }
             },
@@ -204,8 +207,14 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
 
          $scope.listClickEvent = function (index){
           //alert("Entro");
-          console.log($scope.map.markers[index]);
-          toggleBounce($scope.map.markers[index]);
+          //console.log(marker);
+          var marker = $scope.map.markers[index];
+          console.log(marker);
+          var mar = $scope.markerControl.getPlurals().get(marker.id);
+          //console.log($scope.markerControl.getGMarkers());
+          //console.log(mar);
+          //mar.gObject.setAnimation(google.maps.Animation.BOUNCE);
+          toggleBounce(mar.gObject);
         }
 
         
