@@ -14,9 +14,14 @@
                   </p>                
                 </li>
               </ul-->
-                <input type="search" ng-model="q" placeholder="Buscar..." aria-label="filter friends" />
+                <div class="input-field">
+                  <i class="material-icons prefix">search</i>
+                  <input id="icon_prefix" type="text" class="validate" ng-model="q" >
+                  <label for="icon_prefix">Buscar...</label>
+                </div>
+
                 <ul class="collapsible popout example-animate-container" data-collapsible="accordion">
-                  <li ng-repeat="m in map.markers | filter:q as results" map-repeat-directive class="animate-repeat">
+                  <li ng-repeat="m in map.markers | filter:q as results" map-repeat-directive on-finish-render="ngRepeatFinished" class="animate-repeat">
                     <div id="C{{m.id}}" class="collapsible-header" ng-click="listClickEvent($index)"><i class="material-icons" style="color: #1E90FF;">visibility</i><strong>{{m.title}}</strong></div>
                     <div class="collapsible-body">
                       <p>Propietario: {{m.nameOwner}} <br>

@@ -217,6 +217,13 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
           toggleBounce(mar.gObject);
         }
 
+        // Updating the collapsible (los establecimientos en el collapsible)
+        $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+            //you also get the actual event object
+            //do stuff, execute functions -- whatever...
+            $('.collapsible').collapsible();
+        });
+
         
 
 });

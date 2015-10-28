@@ -28,6 +28,30 @@
             height: 100vh /*647px; // Or whatever pixel value you require :)*/
           }
 
+           /* label color */
+         .input-field label {
+           color: #1E90FF;
+         }
+         /* label focus color */
+         .input-field input[type=text]:focus + label {
+           color: #1E90FF;
+         }
+         /* label underline focus color */
+         .input-field input[type=text]:focus {
+           border-bottom: 1px solid #1E90FF;
+           box-shadow: 0 1px 0 0 #1E90FF;
+         }
+         /* valid color */
+         .input-field input[type=text].valid {
+           border-bottom: 1px solid #1E90FF;
+           box-shadow: 0 1px 0 0 #1E90FF;
+         }
+         /* icon prefix focus color */
+         .input-field .prefix.active {
+           color: #1E90FF;
+         } 
+    
+
           /*.angular-google-map,
           .angular-google-map-container {
             width: 100%;
@@ -54,7 +78,6 @@
               <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
               <span class="card-title white-text">{{ mainselected }}</span>              
               <a href="#" class="right"><i class="material-icons">more_vert</i></a>
-              <a href="#" class="right"><i class="material-icons">search</i></a>
             </div>
 
             <!-- Grey navigation panel -->
@@ -89,6 +112,7 @@
 
       <!-- Directives -->
       <script src="js/directives/mapRepeatDirective.js"></script>
+      <script src="js/directives/onFinishRender.js"></script>
 
       <!-- Controllers -->
       <script src="js/controllers/MainController.js"></script>
