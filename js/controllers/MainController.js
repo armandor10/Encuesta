@@ -9,13 +9,15 @@ app.controller('MainController', ['$scope', function($scope) {
                   },
                   {
                     display:'Gestión de Encuesta',
-                    path:'#'
+                    path:'#/encuesta'
                   },
                   {
                     display:'Encuestador',
                     path:'#'
                   }
                 ];
+
+  $scope.mainselected = $scope.main[0].display;
 
   $scope.mainDisplay = function(index){
     //console.log($scope.main[index]);

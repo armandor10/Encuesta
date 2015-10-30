@@ -6,99 +6,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
       areaZoom     = 14;*/
 
   uiGmapGoogleMapApi.then(function(maps) {
-    /*
-     $scope.map = {
-          center: {
-            latitude: 10.461835,
-            longitude: -73.253903
-          },
-          zoom: 14,
-          bounds: {}
-        };
-
-        $scope.options = {
-          scrollwheel: false
-        };
-
-
-   var createRandomMarker = function(i, bounds, idKey) {
-      var lat_min = bounds.southwest.latitude,
-        lat_range = bounds.northeast.latitude - lat_min,
-        lng_min = bounds.southwest.longitude,
-        lng_range = bounds.northeast.longitude - lng_min;
-
-      if (idKey == null) {
-        idKey = "id";
-      }
-
-      var latitude = lat_min + (Math.random() * lat_range);
-      var longitude = lng_min + (Math.random() * lng_range);
-      var ret = {
-        latitude: latitude,
-        longitude: longitude,
-        title: 'm' + i
-      };
-      ret[idKey] = i;
-      return ret;
-    };
-
-    $scope.randomMarkers = [];
-    // Get the bounds from the map once it's loaded
-    $scope.$watch(function() {
-      return $scope.map.bounds;
-    }, function(nv, ov) {
-      // Only need to regenerate once
-      if (!ov.southwest && nv.southwest) {
-        var markers = [];
-        for (var i = 0; i < 50; i++) {
-          markers.push(createRandomMarker(i, $scope.map.bounds))
-        }
-        $scope.randomMarkers = markers;
-        $scope.map.markers = markers;
-      }
-    }, true);
-
-
-    $scope.onMarkerClicked = function (marker) {
-      //alert(marker.title);
-      console.log(marker);
-    //marker.showWindow = true;
-    $scope.$apply();
-    //window.alert("Marker: lat: " + marker.latitude + ", lon: " + marker.longitude + " clicked!!")
-  };
-
-  //call the on-click-funcionality with my collection of objects.
-    $scope.addMarkerClickFunction($scope.map.markers);
-
-//On-click-functionality
-   $scope.addMarkerClickFunction = function (markers) {
-    angular.forEach(markers, function (value, key) {
-        value.onClick = function () {
-            $scope.onMarkerClicked(value);
-        };
-    });    
-  };*/
-
-  /* $scope.map     = { center: { latitude: areaLat, longitude: areaLng }, zoom: areaZoom , bounds: {}};
-  $scope.options = { scrollwheel: false };
     
-    $scope.randomMarkers = [
-      {
-        id: 0,
-          coords: {
-            latitude: 10.461835,
-            longitude: -73.253904
-          }
-      },
-      {
-        id: 1,
-          coords: {
-            latitude: 10.461835,
-            longitude: -73.253902
-          }
-      }
-    ];*/
-
     $scope.markerseleted=null;
     $scope.modelseleted;
     $scope.markers = [
@@ -108,9 +16,10 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     longitude: -73.253994,
                     title: 'Servipan SAS',
                     address:'Cll 4 No 44-67',
-                    nameOwner:"Mario Castillo Andrade",
+                    ownerName:"Mario Castillo Andrade",
                     phone:"5556767",
                     activity:"Comercio",
+                    matricula:"1234"
                 },
                 {
                     id: 2,
@@ -118,9 +27,10 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     longitude: -73.253802,
                     title: 'Proviciones Don Juan',
                     address:'Cll 4 No 44-67',
-                    nameOwner:"Carlos Pulgarin Reyes",
+                    ownerName:"Carlos Pulgarin Reyes",
                     phone:"5556768",
-                    activity:"Industria"
+                    activity:"Industria",
+                    matricula:"5678"
                 },
                 {
                     id: 3,
@@ -128,9 +38,10 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
                     longitude: -73.263902,
                     title: 'Restaurante Yeyo',
                     address:'Cll 4 No 44-67',
-                    nameOwner:"Keiner Valencia Paez",
+                    ownerName:"Keiner Valencia Paez",
                     phone:"5556766",
-                    activity:"Servicio"
+                    activity:"Servicio",
+                    matricula:"5432"
                 }];
 
 
@@ -214,6 +125,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
           //console.log($scope.markerControl.getGMarkers());
           //console.log(mar);
           //mar.gObject.setAnimation(google.maps.Animation.BOUNCE);
+          $scope.modelselected = mar.model;
           toggleBounce(mar.gObject);
         }
 
@@ -224,7 +136,16 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
             $('.collapsible').collapsible();
         });
 
-        
+        $scope.openModal = function(){
+          $('#modal1').openModal();
+        };
+
+        $scope.addEstablishment = function(){
+          $scope.modelselected = {};
+          //console.log($scope.modelselected);
+          $('#modal1').openModal();
+        };
+
 
 });
 });

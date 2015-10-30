@@ -9,4 +9,4 @@ app.directive('onFinishRender', function ($timeout) {
             }
         }
     }
-};
+});

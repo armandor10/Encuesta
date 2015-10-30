@@ -6,6 +6,10 @@ app.config(function($routeProvider) {
     controller: 'MapsController',
     templateUrl: 'views/maps.html'
   })
+  .when('/encuesta', {
+    controller: 'EncuestaController',
+    templateUrl: 'views/encuesta.html'
+  })
   .otherwise({
     redirectTo: '/'
   });
