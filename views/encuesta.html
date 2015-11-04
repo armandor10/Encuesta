@@ -3,13 +3,46 @@
       <div class="col s12 m4 l4"> 
 
            <div class="container" id="contenedor" style="width:100%;margin-top: 100px;" >
-            hola
+            
+
+              <ul class="collection">
+                <li class="collection-item avatar" ng-repeat="c in censuses" on-finish-render="ngRepeatFinished">
+                  
+                  <a ng-click="loadSections($index)" href=""> 
+                    <i class="material-icons circle blue lighten-2">assignment</i>
+                    <span class="title">{{c.title}}</span>
+                  </a>
+                  
+                  <div href="" class="row secondary-content">
+                    <div class="col switch">
+                      <label>
+                        Off
+                        <input id="{{c.id}}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>
+                    <div class="col"><a href=""><i class="material-icons" style="color: #ef5350;">remove_circle</i> </a></div>
+                   
+                  </div>
+                </li>                
+              </ul>
            </div>          
 
       </div>
 
       <div class="col s12 m8 l8"> 
-          hola
+         
+         <div><h4> {{censusSelected.title}}</h4> </div> 
+         Secciones
+
+        <ul class="collapsible popout" data-collapsible="accordion">
+          <li ng-repeat="s in sectionSelected" map-repeat-directive>
+            <div class="collapsible-header"><i class="material-icons blue lighten-2"></i> <strong>{{s.title}}</strong> </div>
+            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+          </li>
+          <li>
+        </ul>
 
       </div>
 

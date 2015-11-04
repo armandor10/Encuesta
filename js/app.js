@@ -15,6 +15,23 @@ app.config(function($routeProvider) {
   });
 });
 
+app.run(function($rootScope) {
+    $rootScope.main = [
+                  {
+                    display:'Gestión de Establecimiento',
+                    path:'#/'
+                  },
+                  {
+                    display:'Gestión de Encuesta',
+                    path:'#/encuesta'
+                  },
+                  {
+                    display:'Encuestador',
+                    path:'#'
+                  }
+                ];
+});
+
 app.config(function(uiGmapGoogleMapApiProvider) {
  uiGmapGoogleMapApiProvider.configure({
   key: 'AIzaSyDe9J6-DNDqHvB9zU_icstOH0TtGA4vLcw',
