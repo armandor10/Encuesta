@@ -7,6 +7,7 @@ app.controller("EncuestaController", function($scope) {
 	$scope.questionSelected = {}; 
 	$scope.lAnswerdSelected = "";
 	$scope.typeSelected = "";
+	$scope.titleModalCE_SE = "";
 
 	 function initialize() {
 	        $scope.questionSelected = {};
@@ -275,6 +276,19 @@ app.controller("EncuestaController", function($scope) {
           $('#textarea1').trigger('autoresize');
 
           $('#mP').openModal();
+        };
+
+        $scope.openMCensus = function(str){
+        	if(str == "CE"){
+        		$scope.titleModalCE_SE = "Censo";
+        	}else{
+        		$scope.titleModalCE_SE = "Sección";
+        	}
+        	$('#mC').openModal();
+        };
+
+        $scope.openMConfig = function(){
+        	$('#mConfig').openModal();
         };
 
         // Load the first census

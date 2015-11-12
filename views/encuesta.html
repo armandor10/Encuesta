@@ -47,7 +47,7 @@
 
                       <li ng-repeat="qs in s.questions"  class="collection-item">
                         <div>{{qs.question}}
-                          <a href="" class="secondary-content"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a> 
+                          <a href="" class="secondary-content" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a> 
                           <a ng-click="openModal(qs)" href="" class="secondary-content"><i class="material-icons icon_blue">edit</i></a>                        
                       </div>
                     </li>
@@ -59,7 +59,7 @@
         </ul>
 
         <div style="position: absolute;left: 1%;bottom: 4.2%;">
-          <a class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Agregar Censo"><i class="material-icons">library_add</i></a>
+          <a ng-click="openMCensus('CE')" class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Agregar Censo"><i class="material-icons">library_add</i></a>
           <a class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Ver resultados"><i class="material-icons">library_books</i></a>
           
         </div>
@@ -69,15 +69,16 @@
             <i class="large material-icons">sort</i>
           </a>
           <ul>
-            <li><a class="btn-floating green"><i class="material-icons">add</i></a></li>
-            <li><a class="btn-floating red lighten-2"><i class="material-icons">remove</i></a></li>
+            <li><a class="btn-floating green" ng-click="openMCensus('SE')"><i class="material-icons">add</i></a></li>
+            <li><a class="btn-floating" style="background-color: #ef5350;"><i class="material-icons">remove</i></a></li>
+            <li><a class="btn-floating yellow darken-1" ng-click="openMConfig()"><i class="material-icons">tune</i></a></li>
           </ul>
         </div>
 
       </div>
 
-        <!-- Modal Structure -->
-        <div id="mP" class="modal" style="width: 90%">
+        <!-- Modal Structure. Modal of Questions -->
+        <div id="mP" class="modal modal-fixed-footer" style="width: 90%">
 
           <div class="modal-content">
              <div class="row">
@@ -145,5 +146,72 @@
             <a href="" ng-click="saveQuestion()" class=" modal-action waves-effect waves-green btn-flat">guardar</a>
           </div>
         </div>
+
+      <!-- Modal Structure. Modal of census -->
+      <div id="mC" class="modal modal-fixed-footer" style="width: 35%;height:40%">
+        <div class="modal-content">
+          <h4>Agregar {{titleModalCE_SE}}</h4>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="first_name2" type="text" class="validate" placeholder="Digite el/la {{titleModalCE_SE}}">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Agregar</a>
+        </div>
+      </div>
+
+      <!-- Modal Structure. Modal of Config-->
+      <div id="mConfig" class="modal modal-fixed-footer" style="width: 30%;height:40%">
+        <div class="modal-content">
+          <h4>Configuraciones</h4>
+                                               
+                  <div href="" class="row">
+                    <div class="col s6"> <span class="title">GPS</span> </div>
+                    
+                    <div class="col s6 switch">
+                      <label>
+                        Off
+                        <input id="{{c.id}}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>                   
+                  </div>
+
+                  <div href="" class="row">
+                    <div class="col s6"> <span class="title">Foto</span> </div>
+                    
+                    <div class="col s6 switch">
+                      <label>
+                        Off
+                        <input id="{{c.id}}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>                   
+                  </div>
+
+                  <div href="" class="row">
+                    <div class="col s6"> <span class="title">Grabación</span> </div>
+                    
+                    <div class="col s6 switch">
+                      <label>
+                        Off
+                        <input id="{{c.id}}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>                   
+                  </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Aceptar</a>
+        </div>
+      </div>
+
 
     </div>
