@@ -37,13 +37,113 @@
          Secciones
 
         <ul class="collapsible popout" data-collapsible="accordion">
-          <li ng-repeat="s in sectionSelected" map-repeat-directive>
-            <div class="collapsible-header"><i class="material-icons blue lighten-2"></i> <strong>{{s.title}}</strong> </div>
-            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+          <li ng-repeat="s in censusSelected.sections" map-repeat-directive>
+            <div ng-click="loadSection($index)" class="collapsible-header">
+              <i class="material-icons blue lighten-2"></i> <strong style="font-size: 120%;" >{{s.title}}</strong> 
+            </div>
+            <div class="collapsible-body">
+                    <ul class="collection with-header">
+                      <li class="collection-header" style="padding-bottom:2.5%;">Preguntas <a ng-click="addQuestion()" class="right btn-floating waves-effect waves-light blue lighten-2"><i class="material-icons">add</i></a> </li>
+
+                      <li ng-repeat="qs in s.questions"  class="collection-item">
+                        <div>{{qs.question}}
+                          <a href="" class="secondary-content"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a> 
+                          <a ng-click="openModal(qs)" href="" class="secondary-content"><i class="material-icons icon_blue">edit</i></a>                        
+                      </div>
+                    </li>
+
+                    </ul>
+            </div>
           </li>
           <li>
         </ul>
 
+        <div style="position: absolute;left: 1%;bottom: 4.2%;">
+          <a class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Agregar Censo"><i class="material-icons">library_add</i></a>
+          <a class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Ver resultados"><i class="material-icons">library_books</i></a>
+          
+        </div>
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+          <a class="btn-floating btn-large blue lighten-2">
+            <i class="large material-icons">sort</i>
+          </a>
+          <ul>
+            <li><a class="btn-floating green"><i class="material-icons">add</i></a></li>
+            <li><a class="btn-floating red lighten-2"><i class="material-icons">remove</i></a></li>
+          </ul>
+        </div>
+
       </div>
+
+        <!-- Modal Structure -->
+        <div id="mP" class="modal" style="width: 90%">
+
+          <div class="modal-content">
+             <div class="row">
+                 <div class="col">
+                    <h4>Pregunta</h4>
+                 </div>
+                 <div class="col right">
+                    <input type="checkbox" class="filled-in" id="required" ng-model="questionSelected.required" />
+                    <label for="required">Obligatoria</label>
+                 </div>
+             </div>
+            
+            <div class="row">
+              <div class="row">
+                 <div class="input-field col s12">
+                    <input ng-model="questionSelected.question" type="text" placeholder="Escriba una pregunta" >
+                 </div>
+              </div>
+
+              <div class="row ">
+                <div class="col s2">
+                    <form action="#">
+                      <p>
+                        <input ng-click="typeQuestion('T')" class="with-gap" name="group1" type="radio" id="T" />
+                        <label for="T">Texto</label>
+                      </p>
+                      <p>
+                        <input ng-click="typeQuestion('SN')" class="with-gap" name="group1" type="radio" id="SN"  />
+                        <label for="SN">Si o No</label>
+                        
+                        <input  ng-click="typeQuestion('NS')" type="checkbox" id="NS"  />
+                        <label for="NS">NS/NR</label>
+                         
+                      </p>
+                      <p>
+                        <input ng-click="typeQuestion('C')" class="with-gap" name="group1" type="radio" id="C"  />
+                        <label for="C">Lista</label>
+                      </p>
+                      <p>
+                        <input ng-click="typeQuestion('R')" class="with-gap" name="group1" type="radio" id="R"  />
+                        <label for="R">Radio</label>
+                      </p>
+                    </form>
+                </div>
+
+                  <div class="input-field col s5" style="margin-right: 3%">
+                    <input id="aux" type="text" class="validate" placeholder="Escriba las respuestas a agregar...">
+                      <a ng-click="addAnswer()" href="" class="secondary-content"><i class="material-icons prefix icon_blue">add</i></a>
+                      <a ng-click="removeAnswer()" href="" class="secondary-content"><i class="material-icons prefix icon_blue ">reply</i></a>
+                    
+                  </div>
+
+                
+                  <div class="input-field col s4">
+                    <textarea disabled  id="textarea1" class="materialize-textarea"></textarea>
+                    <label class="active" for="textarea1">Respuestas</label>
+                  </div>
+              </div>
+
+            </div>  
+
+          </div>
+
+          <div class="modal-footer">
+            <a href="" ng-click="saveQuestion()" class=" modal-action waves-effect waves-green btn-flat">guardar</a>
+          </div>
+        </div>
 
     </div>

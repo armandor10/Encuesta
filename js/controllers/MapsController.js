@@ -127,7 +127,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
           //mar.gObject.setAnimation(google.maps.Animation.BOUNCE);
           $scope.modelselected = mar.model;
           toggleBounce(mar.gObject);
-        }
+        };
 
         // Updating the collapsible (los establecimientos en el collapsible)
         $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
