@@ -13,7 +13,7 @@ app.controller('MainController', ['$scope', function($scope) {
                   },
                   {
                     display:'Encuestador',
-                    path:'#'
+                    path:'#/encuestador'
                   }
                 ];
 

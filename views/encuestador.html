@@ -1,0 +1,132 @@
+<div class="row" style="width:98%">
+
+      <table class="bordered striped highlight responsive-table">
+        <thead>
+          <tr>
+          	  <th >No documento</th>
+              <th >Nombre</th>
+              <th >Usuario</th>
+              <th> Dirección</th>
+              <th >Celular</th>
+              <th >Email</th>
+              <th >Estado</th>
+              <th>&nbsp;</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="p in pollsters | filter:q as results" on-finish-render="ngRepeatFinished">
+            <td> {{p.noDocumendo}}</td>
+            <td> {{p.name}} </td>
+            <td> {{p.user}} </td>
+            <td> {{p.address}} </td>
+            <td> {{p.cellphone}} </td>
+            <td> {{p.email}} </td>
+            <td> 
+                <!-- Switch -->
+                <div class="switch">
+                  <label>
+                    Off
+                    <input id="{{p.noDocumendo}}" type="checkbox">
+                    <span class="lever"></span>
+                    On
+                  </label>
+                </div>
+            </td>
+            <td> 
+              <a ng-click="addPollster($index,'U')" href=""><i class="material-icons icon_blue">edit</i></a> 
+              <a ng-click="newPassword($index)" href="" style="padding-left:1.5%"> <i class="material-icons icon_blue">https</i> </a> 
+              <a href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>                
+            </td>
+          </tr>
+           <tr class="animate-repeat" ng-if="results.length == 0">
+               <td colspan="7"><strong>No encontrado...</strong></td> 
+           </tr>
+        </tbody>
+      </table>
+
+  <div style="position: absolute;right: 2%;bottom: 7%;">
+      <a ng-click="addPollster('0','A')" class="btn-floating btn-large waves-effect waves-light blue lighten-2"><i class="material-icons">add</i></a>
+  </div>
+
+</div>
+
+
+  <!-- Modal Structure -->
+  <div id="mPollster" class="modal modal-fixed-footer" style="width:80%">
+    <div class="modal-content">
+      <h4>Encuestador</h4>
+
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s5">
+                <i class="material-icons prefix icon_blue">credit_card</i>
+                <input id="icon_prefix1" type="text" class="validate" ng-model="PollsterSelected.noDocumendo" >
+                <label class="active" for="icon_prefix1">No Documento</label>
+              </div>
+              <div class="input-field col s7">
+                <i class="material-icons prefix icon_blue">account_circle</i>
+                <input id="icon_prefix" type="text" class="validate" ng-model="PollsterSelected.name">
+                <label class="active" for="icon_prefix">Nombre</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix icon_blue">account_circle</i>
+                <input id="icon_prefix2" type="text" class="validate" ng-model="PollsterSelected.user">
+                <label class="active" for="icon_prefix2">Usuario</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="material-icons prefix icon_blue">location_on</i>
+                <input id="icon_prefix3" type="text" class="validate" ng-model="PollsterSelected.address">
+                <label class="active" for="icon_prefix3">Dirección</label>
+              </div>
+            </div>
+
+             <div class="row">
+              <div class="input-field col s6">
+                    <i class="material-icons prefix icon_blue">message</i>
+                    <input id="email" type="email" class="validate" ng-model="PollsterSelected.email">
+                    <label class="active" for="email" data-error="wrong" data-success="right">Email</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="material-icons prefix icon_blue">phone</i>
+                <input id="icon_telephone" type="tel" class="validate" ng-model="PollsterSelected.cellphone">
+                <label class="active" for="icon_telephone">Celular</label>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
+    </div>
+  </div>
+
+    <!-- Modal Structure -->
+  <div id="mPassword" class="modal modal-fixed-footer" style="height:40%">
+    <div class="modal-content">
+      <h4>Cambio de contraseña usuario: {{PollsterSelected.user}}</h4>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                  <input id="password" type="password" class="validate">
+                  <label for="password">Nueva Contraseña</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="password2" type="password" class="validate">
+                  <label for="password2">Repita la Contraseña</label>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">guardar</a>
+    </div>
+  </div>

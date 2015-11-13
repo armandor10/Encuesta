@@ -10,6 +10,10 @@ app.config(function($routeProvider) {
     controller: 'EncuestaController',
     templateUrl: 'views/encuesta.html'
   })
+  .when('/encuestador', {
+    controller: 'EncuestadorController',
+    templateUrl: 'views/encuestador.html'
+  })
   .otherwise({
     redirectTo: '/'
   });
