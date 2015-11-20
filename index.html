@@ -10,6 +10,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta charset="utf-8">
 
+      <script src='js/vendor/lodash.min.js'></script>
+      <script src="js/vendor/angular.js"></script>
+      <script src="js/vendor/angular-route.min.js"></script>
+      <script src="js/vendor/angular-resource.js"></script>
+      <script src='js/vendor/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+      <script src='js/vendor/angular-google-maps.min.js'></script>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+      <script type="text/javascript" src="js/vendor/materialize.js"></script>
+
       <style type="text/css">
 
           body{
@@ -69,15 +80,7 @@
 
       </style>
       
-      <script src='js/vendor/lodash.min.js'></script>
-      <script src="js/vendor/angular.min.js"></script>
-      <script src="js/vendor/angular-route.min.js"></script>
-      <script src='js/vendor/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
-      <script src='js/vendor/angular-google-maps.min.js'></script>
 
-      <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-      <script type="text/javascript" src="js/vendor/materialize.js"></script>
       
 
     </head>
@@ -96,7 +99,7 @@
             <!-- Grey navigation panel -->
               <ul id="slide-out" class="side-nav" style="width: 240px;" >
                 <li ng-repeat="m in main">
-                  <a href="{{m.path}}" ng-click="mainDisplay($index)">{{m.display}}</a>
+                  <a href="{{m.path}}" ng-click="mainDisplay($index)">{{m.nombre}}</a>
                 </li>
               </ul>   
 
@@ -118,6 +121,8 @@
 
       <!-- Services -->
       <script src="js/services/MapsService.js"></script>
+      <script src="js/services/matriculadoService.js"></script>
+      <script src="js/services/menuService.js"></script>
 
       <!-- Directives -->
       <script src="js/directives/mapRepeatDirective.js"></script>

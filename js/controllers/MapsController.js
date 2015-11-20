@@ -1,4 +1,4 @@
-app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
+app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculadoService) {
   
   // Define variables for our Map object
   /*var areaLat      = 10.461835,
@@ -6,43 +6,39 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
       areaZoom     = 14;*/
 
   uiGmapGoogleMapApi.then(function(maps) {
+
+    //console.log(matriculadoService.getAll());
     
     $scope.markerseleted=null;
     $scope.modelseleted;
-    $scope.markers = [
-                {
-                    id: 1,
-                    latitude: 10.469635,
-                    longitude: -73.253994,
-                    title: 'Servipan SAS',
-                    address:'Cll 4 No 44-67',
-                    ownerName:"Mario Castillo Andrade",
-                    phone:"5556767",
-                    activity:"Comercio",
-                    matricula:"1234"
-                },
-                {
-                    id: 2,
-                    latitude: 10.459235,
-                    longitude: -73.253802,
-                    title: 'Proviciones Don Juan',
-                    address:'Cll 4 No 44-67',
-                    ownerName:"Carlos Pulgarin Reyes",
-                    phone:"5556768",
-                    activity:"Industria",
-                    matricula:"5678"
-                },
-                {
-                    id: 3,
-                    latitude: 10.469832,
-                    longitude: -73.263902,
-                    title: 'Restaurante Yeyo',
-                    address:'Cll 4 No 44-67',
-                    ownerName:"Keiner Valencia Paez",
-                    phone:"5556766",
-                    activity:"Servicio",
-                    matricula:"5432"
-                }];
+
+    function loadMaticulado() {
+        var promiseGet = matriculadoService.getAll2(); //The Method Call from service
+        promiseGet.then(function (pl) {
+          $scope.markers = [];
+          angular.forEach(pl.data, function(value, key) {
+              var marker = {
+                           id: key,
+                           latitude: value.latitud,
+                           longitude: value.longitud,
+                           title: value.razonSocial_nombre,
+                           address: value.direccion,
+                           ownerName: value.propietario,
+                           phone: value.telefono,
+                           activity: value.actividad,
+                           matricula: value.noMatricula
+                         };
+            $scope.markers.push(marker);
+            //console.log(key + ': ' + value);
+          });          
+          //console.log($scope.markers);
+          $scope.map.markers = $scope.markers;
+        },
+        function (errorPl) {
+         $log.error('Error al cargar los establecimientos', errorPl);
+       });
+    }
+    loadMaticulado();
 
 
         var data = {};
@@ -146,6 +142,22 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi) {
           $('#modal1').openModal();
         };
 
+        $scope.saveEstablishment = function(){
+          //alert("Hola");
+          console.log($scope.modelselected);
+          var matriculado = {};
+          matriculado.noMatriculado = $scope.modelselected.matricula;
+          matriculado.razonSocial_nombre = $scope.modelselected.title;
+          matriculado.propietario = $scope.modelselected.ownerName;
+          matriculado.direccion = $scope.modelselected.address;
+          matriculado.telefono = $scope.modelselected.phone;
+          matriculado.actividad = 1;
 
+          var request = matriculadoService.postMatriculado(matriculado);
+          console.log(request);
+
+        };
+
+        //console.log($scope.map);
 });
 });

@@ -1,30 +1,29 @@
-app.controller('MainController', ['$scope', function($scope) { 
+app.controller('MainController', ['$scope','menuService', function($scope, menuService) { 
   
   $scope.mainselected = "";
+  
+    function loadMain() {
+        var promiseGet = menuService.getAll(); //The Method Call from service
+        promiseGet.then(function (pl) {
+          $scope.main = pl.data;
+          $scope.mainselected = $scope.main[0].nombre;
+          //console.log($scope.main[0].nombre);
+        },
+        function (errorPl) { 
+          $log.error('Error cargando el menu', errorPl);
+        });
+    };
 
-  $scope.main = [
-                  {
-                    display:'Gestión de Establecimiento',
-                    path:'#/'
-                  },
-                  {
-                    display:'Gestión de Encuesta',
-                    path:'#/encuesta'
-                  },
-                  {
-                    display:'Encuestador',
-                    path:'#/encuestador'
-                  }
-                ];
+    loadMain();
 
-  $scope.mainselected = $scope.main[0].display;
+  //$scope.mainselected = $scope.main[0].nombre;
 
   $scope.mainDisplay = function(index){
     //console.log($scope.main[index]);
     //alert($scope.main[index].display);
     //$('#mainselected').val($scope.main[index].display);
-    $scope.mainselected = $scope.main[index].display;
-    //alert(mainselected);
+    $scope.mainselected = $scope.main[index].nombre;
+    alert(mainselected);
     //$scope.$apply();
   }
 

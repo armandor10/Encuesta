@@ -15,7 +15,7 @@
                 </li>
               </ul-->
                 <div class="input-field">
-                  <i class="material-icons prefix">search</i>
+                  <i class="material-icons prefix icon_blue">search</i>
                   <input id="icon_prefix" type="text" class="validate" ng-model="q" >
                   <label for="icon_prefix">Buscar...</label>
                 </div>
@@ -26,9 +26,6 @@
                     </a>
                     <ul>
                       <li><a class="btn-floating red" data-position="left" data-tooltip="some text" ng-click="addEstablishment()" ><i class="material-icons">add</i></i></a></li>
-                      <li><a class="btn-floating yellow darken-1" data-position="left" data-tooltip="some text"><i class="material-icons">format_quote</i></a></li>
-                      <li><a class="btn-floating green" data-position="left" data-tooltip="some text"><i class="material-icons">publish</i></a></li>
-                      <li><a class="btn-floating blue" data-position="left" data-tooltip="some text"><i class="material-icons">attach_file</i></a></li>
                     </ul>
                   </div>
 
@@ -120,6 +117,6 @@
 
         </div>
         <div class="modal-footer">
-          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">Guardar</a>
+          <a href="" ng-click="saveEstablishment()" class="modal-action modal-close waves-effect waves-green btn-flat">Guardar</a>
         </div>
       </div>
