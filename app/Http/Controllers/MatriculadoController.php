@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Matriculado;
@@ -19,16 +18,6 @@ class MatriculadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
         return DB::table('matriculado')
@@ -49,6 +38,26 @@ class MatriculadoController extends Controller
     public function store(Request $request)
     {
         //
+        /*try {           
+            $data = $request->all();
+        
+            $matriculado = new Matriculado();
+            $matriculado ->noMatriculado  = $data["noMatriculado"];
+            $matriculado ->razonSocial_nombre = $data["razonSocial_nombre"];
+            $matriculado ->propietario= $data["propietario"];
+            $matriculado ->direccion = $data["direccion"];
+            $matriculado ->telefono= $data["telefono"];
+            $matriculado ->actividad = $data["actividad"];
+            $matriculado ->save();   
+     
+            return JsonResponse::create(array('message' => "Matriculado Guardada Correctamente", "request" => $matriculado), 200);
+            
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo guardar el Matriculado", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }*/
+
+        return 'hola';
+
     }
 
     /**

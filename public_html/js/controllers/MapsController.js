@@ -144,7 +144,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
 
         $scope.saveEstablishment = function(){
           //alert("Hola");
-          console.log($scope.modelselected);
+          //console.log($scope.modelselected);
           var matriculado = {};
           matriculado.noMatriculado = $scope.modelselected.matricula;
           matriculado.razonSocial_nombre = $scope.modelselected.title;

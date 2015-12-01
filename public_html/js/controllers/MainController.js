@@ -14,7 +14,7 @@ app.controller('MainController', ['$scope','menuService', function($scope, menuS
         });
     };
 
-    loadMain();
+    loadMain();    
 
   //$scope.mainselected = $scope.main[0].nombre;
 
@@ -23,7 +23,7 @@ app.controller('MainController', ['$scope','menuService', function($scope, menuS
     //alert($scope.main[index].display);
     //$('#mainselected').val($scope.main[index].display);
     $scope.mainselected = $scope.main[index].nombre;
-    alert(mainselected);
+    //alert(mainselected);
     //$scope.$apply();
   }
 

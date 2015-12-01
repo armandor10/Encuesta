@@ -1,4 +1,4 @@
-var uri = 'http://localhost/ccv/public';
+var uri = '../public';
 var app = angular.module("myApp", ['ngRoute','ngResource','uiGmapgoogle-maps']);
 
 app.config(function($routeProvider) {

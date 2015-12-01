@@ -19,4 +19,12 @@ Route::get('/m', function () {
     return 'welcome';
 });
 
-Route::get('Matriculado','MatriculadoController@create');
+/* Router Menu*/
+Route::get('Menu','MenuController@index');
+
+/* Router Matriculado*/
+//Route::get('Matriculado','MatriculadoController@index');
+//Route::post('Matriculado','MatriculadoController@store');
+
+Route::resource('Matriculado', 'MatriculadoController',
+                ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
