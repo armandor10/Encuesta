@@ -25,24 +25,17 @@ class MatriculadoController extends Controller
             ->leftjoin('actividad', 'matriculado.actividad', '=', 'actividad.id')
             ->select('matriculado.id','noMatricula', 'razonSocial_nombre',
                 'propietario','direccion','telefono','actividad.actividad',
-                'latitud', 'longitud')
+                'latitud', 'longitud','matriculado.actividad as idactividad')
             ->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        /*try {           
+    public function save(Request $request){
+                //
+        try {           
             $data = $request->all();
         
             $matriculado = new Matriculado();
-            $matriculado ->noMatriculado  = $data["noMatriculado"];
+            $matriculado ->noMatricula  = $data["noMatricula"];            
             $matriculado ->razonSocial_nombre = $data["razonSocial_nombre"];
             $matriculado ->propietario= $data["propietario"];
             $matriculado ->direccion = $data["direccion"];
@@ -54,9 +47,37 @@ class MatriculadoController extends Controller
             
         } catch (Exception $exc) {
             return JsonResponse::create(array('message' => "No se pudo guardar el Matriculado", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
-        }*/
+        }
 
-        return 'hola';
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        try {           
+            $data = $request->all();
+        
+            $matriculado = new Matriculado();
+            $matriculado ->noMatricula  = $data["noMatricula"];
+            $matriculado ->razonSocial_nombre = $data["razonSocial_nombre"];
+            $matriculado ->propietario= $data["propietario"];
+            $matriculado ->direccion = $data["direccion"];
+            $matriculado ->telefono= $data["telefono"];
+            $matriculado ->actividad = $data["actividad"];
+            $matriculado ->save();   
+     
+            return JsonResponse::create(array('message' => "Matriculado Guardada Correctamente", "request" => $matriculado), 200);
+            
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo guardar el Matriculado", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
 
     }
 
@@ -89,9 +110,57 @@ class MatriculadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+     public function update(Request $request, $id)
     {
-        //
+        try {
+            
+            $data = $request->all();
+            
+            /*$matriculado = Matriculado::find($id);
+
+            $matriculado ->noMatricula  = $data["noMatricula"];
+            $matriculado ->razonSocial_nombre = $data["razonSocial_nombre"];
+            $matriculado ->propietario= $data["propietario"];
+            $matriculado ->direccion = $data["direccion"];
+            $matriculado ->telefono= $data["telefono"];
+            $matriculado ->actividad = $data["actividad"];
+            
+            $matriculado->save();   */
+            return $data;
+            
+        //return JsonResponse::create(array('message' => "Matricula Modificada Correctamente", "request" =>json_encode($data)), 200);
+            
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo Modificar la marca", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
+    }
+   
+    public  function Actualizar(Request $request, $id){
+        try {
+            
+            $data = $request->all();
+            
+            $matriculado = Matriculado::find($id);
+
+            $matriculado ->noMatricula  = $data["noMatricula"];
+            $matriculado ->razonSocial_nombre = $data["razonSocial_nombre"];
+            $matriculado ->propietario= $data["propietario"];
+            $matriculado ->direccion = $data["direccion"];
+            $matriculado ->telefono= $data["telefono"];
+            $matriculado ->actividad = $data["actividad"];
+            
+            $matriculado->save();  
+            
+            return JsonResponse::create(array('message' => "Matricula Modificada Correctamente", "request" =>json_encode($data)), 200);
+            
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo Modificar la marca", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
+        
+    }
+    
+     public  function Act(Request $request, $id){
+        return $id;    
     }
 
     /**

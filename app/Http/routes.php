@@ -19,12 +19,17 @@ Route::get('/m', function () {
     return 'welcome';
 });
 
+
+
 /* Router Menu*/
 Route::get('Menu','MenuController@index');
 
-/* Router Matriculado*/
-//Route::get('Matriculado','MatriculadoController@index');
-//Route::post('Matriculado','MatriculadoController@store');
+/* Router Matriculado */
+//Route::resource('Matriculado','MatriculadoController');
+Route::get('Matriculado','MatriculadoController@index');
+Route::post('Matriculado/save','MatriculadoController@save');
+Route::put('Matriculado/{id}', 'MatriculadoController@Actualizar');
 
-Route::resource('Matriculado', 'MatriculadoController',
-                ['only' => ['index', 'store', 'update', 'destroy', 'show']]);
+/* Router Actividad */
+Route::get('Actividad','ActividadController@index');
+

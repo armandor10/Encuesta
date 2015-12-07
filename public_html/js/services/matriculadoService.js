@@ -13,9 +13,18 @@ app.service("matriculadoService", function ($http) {
 
     this.postMatriculado = function (matriculado) {
         //console.log(matriculado)
-        var req = $http.post(uri+'/matriculado', matriculado); 
+        var req = $http.post(uri + '/Matriculado/save', matriculado); 
         return req;
     };
-        
+
+    this.put = function (id, matriculado) {       
+        var req = $http.put(uri + '/Matriculado/' + id, matriculado);
+        return req;        
+    };
+      
+    this.getAllActividad = function(){
+        var req = $http.get(uri+'/Actividad');
+        return req;
+    };  
     
 });

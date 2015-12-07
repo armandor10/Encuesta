@@ -97,10 +97,16 @@
                   <input id="mIMatricula" ng-model="modelselected.matricula" type="text" class="validate">
                   <label class="active" for="mIMatricula">Matricula</label>
                 </div>
-                <div class="input-field col s6">
-                  <input id="mIActividad" ng-model="modelselected.activity" type="text" class="validate">
-                  <label class="active" for="icon_telephone">Actividad</label>
-                </div>
+
+              <div class="input-field col s6">
+
+                <select name="repeatSelect" id="repeatSelect" ng-model="actividades.actividadSelect">
+                  <option ng-repeat="option in actividades.list" on-finish-render="ngRepeatFinished" value="{{option.id}}">{{option.actividad}}</option>
+                </select>
+                <label>Actividad</label>
+
+              </div>
+
               </div>
                <div class="row">
                 <div class="input-field col s6">
