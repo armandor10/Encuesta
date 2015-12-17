@@ -8,15 +8,14 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
   uiGmapGoogleMapApi.then(function(maps) {
 
     //console.log(matriculadoService.getAll());
-
-   // initialize
-   $('select').material_select();
     
     $scope.markerseleted=null;
     $scope.modelseleted;
     $scope.actividades = {};
     $scope.actividades.actividadSelect = "";
     $scope.actividades.list = [];
+    var myInterval;
+    var ban;
 
     function loadMaticulado() {
         var promiseGet = matriculadoService.getAll2(); //The Method Call from service
@@ -58,8 +57,9 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
         },
         function (errorPl) {
          $log.error('Error al cargar los establecimientos', errorPl);
-       });
-    }
+       });       
+    };
+
     function loadActividad(){
         var promiseGet = matriculadoService.getAllActividad(); //The Method Call from service
         promiseGet.then(function (pl) {
@@ -69,6 +69,42 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
         function (errorPl) {
          $log.error('Error al cargar las actividades', errorPl);
        });
+    };
+
+    function updateMarkers(){
+        var promiseGet = matriculadoService.getAll2(); //The Method Call from service
+        promiseGet.then(function (pl) {
+          $scope.markers = [];
+          $scope.map.markers = [];
+          angular.forEach(pl.data, function(value, key) {
+              var marker = {
+                           id: value.id,
+                           latitude: value.latitud,
+                           longitude: value.longitud,
+                           title: value.razonSocial_nombre,
+                           address: value.direccion,
+                           ownerName: value.propietario,
+                           phone: value.telefono,
+                           matricula: value.noMatricula,
+                           activity: value.actividad,
+                           idactivity:value.idactividad
+                         };
+
+          var childMarker = $scope.markerControl.getChildMarkers().get(marker.id);
+          childMarker.updateModel(marker);
+          //console.log(childMarker);
+          //console.log(key);
+          $scope.map.markers[key] = childMarker.model;
+
+          //console.log($scope.map.markers[key]);
+
+          clearInterval(myInterval);
+
+          });           
+        },
+        function (errorPl) {
+         $log.error('Error al cargar los establecimientos', errorPl);
+       }); 
     };
     loadActividad();
     loadMaticulado();
@@ -144,6 +180,8 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
 
         $scope.map = data.map;
 
+        $scope.map.visualRefresh = true;
+
          $scope.listClickEvent = function (index){
           //alert("Entro");
           //console.log(marker);
@@ -169,6 +207,7 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
         $scope.openModal = function(){
           $('#repeatSelect').val($scope.modelselected.idactivity);
           $('#repeatSelect').material_select();
+          ban = false;
           //$scope.actividades.actividadSelect = $scope.modelselected.idactivity;
           $('#modal1').openModal();
         };
@@ -176,9 +215,10 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
         $scope.addEstablishment = function(){
           $scope.modelselected = {};
           $('#repeatSelect').val('0');
-          $('#repeatSelect').material_select();
-          //console.log($scope.modelselected);
+          $('#repeatSelect').material_select();          
           $scope.modelselected.id = '';
+          ban= true;
+          //console.log($scope.modelselected);
           $('#modal1').openModal();
         };
 
@@ -192,7 +232,9 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
           matriculado.telefono = $scope.modelselected.phone;
           matriculado.actividad = $('#repeatSelect').val();
 
-          if($scope.modelselected.id == ''){
+          //console.log($scope.modelselected.id);
+
+          if(ban){
               var promisePost = matriculadoService.postMatriculado(matriculado);
               promisePost.then(function (d) {
                  Materialize.toast("Establecimiento guardado",3000,'rounded');                
@@ -223,7 +265,11 @@ app.controller("MapsController", function($scope, uiGmapGoogleMapApi, matriculad
                 });
 
           }
-          loadMaticulado();
+
+          /* Actualizar los Markers */
+          myInterval = setInterval(function () {
+              updateMarkers();
+          },2000);
 
         };
 

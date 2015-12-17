@@ -33,3 +33,18 @@ Route::put('Matriculado/{id}', 'MatriculadoController@Actualizar');
 /* Router Actividad */
 Route::get('Actividad','ActividadController@index');
 
+/* Router Censo */
+
+Route::get('Censo','CensoController@index');
+Route::get('Censo/{id}','CensoController@show');
+Route::get('Censo/{id}/{idSeccion}','CensoController@getPreguntas');
+Route::post('/Censo','CensoController@store');
+Route::post('/Seccion','CensoController@storeSeccion');
+Route::post('/Pregunta','CensoController@storePregunta'); //'CensoController@storePregunta'
+Route::post('/otra','CensoController@otra'); 
+Route::put('Censo/{id}','CensoController@update');
+Route::put('Censo/Config/{id}','CensoController@updateCensoConfig');
+Route::put('Pregunta/{id}','CensoController@updatePregunta');
+Route::delete('Censo/{id}','CensoController@destroy');
+Route::delete('Seccion/{id}','CensoController@destroySeccion');
+Route::delete('Pregunta/{id}','CensoController@destroyPregunta');

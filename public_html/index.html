@@ -4,7 +4,7 @@
       <!--Import Google Icon Font-->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/materialize2.css"  media="screen,projection"/>
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -19,7 +19,7 @@
 
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-      <script type="text/javascript" src="js/vendor/materialize.js"></script>
+      <script type="text/javascript" src="js/vendor/materialize2.js"></script>
 
       <style type="text/css">
 
@@ -78,6 +78,11 @@
             height: 100%;
           }*/
 
+          .scroll {
+            height: 400px;
+            overflow-y: scroll;
+          }
+
       </style>
       
 
@@ -123,6 +128,7 @@
       <script src="js/services/MapsService.js"></script>
       <script src="js/services/matriculadoService.js"></script>
       <script src="js/services/menuService.js"></script>
+      <script src="js/services/censoService.js"></script>
 
       <!-- Directives -->
       <script src="js/directives/mapRepeatDirective.js"></script>
@@ -153,6 +159,15 @@
        
              //$('.collapsible').collapsible(); 
             $('.tooltipped').tooltip({delay: 50});
+
+            $(function() {
+                var div = $('body');
+                var width = div.width();
+                //var s = $('#scroll');
+                //document.getElementById('#scroll').style.height = width*0.3+ 'px';
+                //s.height(width*0.3);
+                //console.log(window.innerHeight,width*0.3);
+            });
 
         });
 

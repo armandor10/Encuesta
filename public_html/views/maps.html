@@ -29,7 +29,7 @@
                     </ul>
                   </div>
 
-                <ul class="collapsible popout example-animate-container" data-collapsible="accordion">
+                <ul class="scroll collapsible popout example-animate-container" data-collapsible="accordion">
                   <li ng-repeat="m in map.markers | filter:q as results" map-repeat-directive on-finish-render="ngRepeatFinished" class="animate-repeat">
                     <div id="C{{m.id}}" class="collapsible-header" ng-click="listClickEvent($index)"><i class="material-icons" style="color: #1E90FF;">visibility</i><strong>{{m.title}}</strong></div>
                     <div class="collapsible-body">
@@ -53,7 +53,7 @@
         <div class="container col s12 m8 l8" >
           <!-- Teal page content  -->
           <div >
-              <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+              <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds" refresh='true'>
 
                   <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeClick="map.window.closeClick()">
                       <div style="color: black">

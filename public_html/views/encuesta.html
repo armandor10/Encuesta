@@ -1,6 +1,6 @@
     <div class="row">
 
-      <div class="col s12 m4 l4"> 
+      <div class="scroll col s12 m4 l4"> 
 
            <div class="container" id="contenedor" style="width:100%;" >
             
@@ -8,7 +8,7 @@
               <ul class="collection">
                 <li class="collection-item avatar" ng-repeat="c in censuses" on-finish-render="ngRepeatFinished">
                   
-                  <a ng-click="loadSections($index)" href=""> 
+                  <a ng-click="loadSections(c)" href=""> 
                     <i class="material-icons circle blue lighten-2">assignment</i>
                     <span class="title">{{c.title}}</span>
                   </a>
@@ -17,12 +17,12 @@
                     <div class="col switch">
                       <label>
                         Off
-                        <input id="{{c.id}}" type="checkbox">
+                        <input ng-click="updateCensus(c.id)" id="{{c.id}}" type="checkbox">
                         <span class="lever"></span>
                         On
                       </label>
                     </div>
-                    <div class="col"><a href=""><i class="material-icons" style="color: #ef5350;">remove_circle</i> </a></div>
+                    <div class="col"><a ng-click="openDecision(c)" href=""><i class="material-icons" style="color: #ef5350;">remove_circle</i> </a></div>
                    
                   </div>
                 </li>                
@@ -31,7 +31,7 @@
 
       </div>
 
-      <div class="col s12 m8 l8"> 
+      <div class="scroll col s12 m8 l8" > 
          
          <div><h4> {{censusSelected.title}}</h4> </div> 
          Secciones
@@ -47,30 +47,29 @@
 
                       <li ng-repeat="qs in s.questions"  class="collection-item">
                         <div>{{qs.question}}
-                          <a href="" class="secondary-content" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a> 
+                          <a ng-click="openDp(qs)" href="" class="secondary-content" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a> 
                           <a ng-click="openModal(qs)" href="" class="secondary-content"><i class="material-icons icon_blue">edit</i></a>                        
-                      </div>
-                    </li>
-
+                        </div>
+                      </li>
                     </ul>
             </div>
           </li>
-          <li>
         </ul>
 
         <div style="position: absolute;left: 1%;bottom: 4.2%;">
           <a ng-click="openMCensus('CE')" class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Agregar Censo"><i class="material-icons">library_add</i></a>
+
           <a class="btn btn-large blue lighten-2 tooltipped waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="Ver resultados"><i class="material-icons">library_books</i></a>
           
         </div>
 
-        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
           <a class="btn-floating btn-large blue lighten-2">
             <i class="large material-icons">sort</i>
           </a>
           <ul>
             <li><a class="btn-floating green" ng-click="openMCensus('SE')"><i class="material-icons">add</i></a></li>
-            <li><a class="btn-floating" style="background-color: #ef5350;"><i class="material-icons">remove</i></a></li>
+            <li><a class="btn-floating" ng-click="openDS()" style="background-color: #ef5350;"><i class="material-icons">remove</i></a></li>
             <li><a class="btn-floating yellow darken-1" ng-click="openMConfig()"><i class="material-icons">tune</i></a></li>
           </ul>
         </div>
@@ -126,9 +125,13 @@
 
                   <div class="input-field col s5" style="margin-right: 3%">
                     <input id="aux" type="text" class="validate" placeholder="Escriba las respuestas a agregar...">
-                      <a ng-click="addAnswer()" href="" class="secondary-content"><i class="material-icons prefix icon_blue">add</i></a>
-                      <a ng-click="removeAnswer()" href="" class="secondary-content"><i class="material-icons prefix icon_blue ">reply</i></a>
-                    
+                      <a ng-click="addAnswer()" href="" class="secondary-content">
+                        <i class="material-icons prefix icon_blue">add</i>
+                      </a><br>
+
+                      <a ng-click="removeAnswer()" href="" class="secondary-content" style='padding-top: 40px;'>
+                        <i class="material-icons prefix icon_blue ">reply</i>
+                      </a>                    
                   </div>
 
                 
@@ -143,7 +146,8 @@
           </div>
 
           <div class="modal-footer">
-            <a href="" ng-click="saveQuestion()" class=" modal-action waves-effect waves-green btn-flat">guardar</a>
+            <a href="" class="modal-action modal-close waves-effect waves-blue btn-flat">cancelar</a>
+            <a href="" ng-click="saveQuestion()" class=" modal-action waves-effect waves-blue btn-flat">guardar</a>
           </div>
         </div>
 
@@ -153,17 +157,58 @@
           <h4>Agregar {{titleModalCE_SE}}</h4>
             <div class="row">
               <div class="input-field col s12">
-                <input id="first_name2" type="text" class="validate" placeholder="Digite el/la {{titleModalCE_SE}}">
+                <input id="first_name2" type="text" class="validate" placeholder="Digite el/la {{titleModalCE_SE}}" ng-model="CE_SE.nombre">
               </div>
             </div>
         </div>
         <div class="modal-footer">
-          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Agregar</a>
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " >Cancelar</a>
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="saveCensus()">Agregar</a>
+        </div>
+      </div>
+
+      <!-- Modal Structure. Modal of decision -->
+      <div id="mD" class="modal" style="width: 35%;height:40%">
+        <div class="modal-content">
+          <h4>¿ Esta seguro de eliminar ?  </h4>
+          <br>
+          {{censusSelected.title}}
+        </div>
+        <div class="modal-footer">
+          <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="deleteCensus()">eliminar</a>
+        </div>
+      </div>
+
+      <!-- Modal Structure. Modal of decision -->
+      <div id="mDS" class="modal modal-fixed-footer" style="width: 35%;height:40%">
+        <div class="modal-content">
+          <h4>Eliminar Sección </h4>
+          <div class="input-field col s12">
+            <select id="mDsectionId" ng-model="CE_SE.id">
+              <option  ng-repeat="s in censusSelected.sections" value="{{s.idSection}}" on-finish-render="ngRepeatFinished" >{{s.title}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="deleteSection()">eliminar</a>
+        </div>
+      </div>
+
+      <!-- Modal Structure. Modal of decision -->
+      <div id="mDp" class="modal" style="width: 35%;height:40%">
+        <div class="modal-content">
+          <h4>¿ Esta seguro de eliminar la pregunta ?  </h4>
+        </div>
+        <div class="modal-footer">
+          <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="deletePregunta()">eliminar</a>
         </div>
       </div>
 
       <!-- Modal Structure. Modal of Config-->
-      <div id="mConfig" class="modal modal-fixed-footer" style="width: 30%;height:40%">
+      <div id="mConfig" class="modal modal-fixed-footer" style="width: 30%;height:45%">
         <div class="modal-content">
           <h4>Configuraciones</h4>
                                                
@@ -173,7 +218,7 @@
                     <div class="col s6 switch">
                       <label>
                         Off
-                        <input id="{{c.id}}" type="checkbox">
+                        <input ng-click="setSwitch('gps')" id="gps" type="checkbox">
                         <span class="lever"></span>
                         On
                       </label>
@@ -186,7 +231,7 @@
                     <div class="col s6 switch">
                       <label>
                         Off
-                        <input id="{{c.id}}" type="checkbox">
+                        <input ng-click="setSwitch('foto')" id="foto" type="checkbox">
                         <span class="lever"></span>
                         On
                       </label>
@@ -199,14 +244,12 @@
                     <div class="col s6 switch">
                       <label>
                         Off
-                        <input id="{{c.id}}" type="checkbox">
+                        <input ng-click="setSwitch('grabacion')" id="grabacion" type="checkbox">
                         <span class="lever"></span>
                         On
                       </label>
                     </div>                   
                   </div>
-
-
         </div>
         <div class="modal-footer">
           <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Aceptar</a>

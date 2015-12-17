@@ -154,7 +154,7 @@ class MatriculadoController extends Controller
             return JsonResponse::create(array('message' => "Matricula Modificada Correctamente", "request" =>json_encode($data)), 200);
             
         } catch (Exception $exc) {
-            return JsonResponse::create(array('message' => "No se pudo Modificar la marca", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+            return JsonResponse::create(array('message' => "No se pudo Modificar la Matricula", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
         }
         
     }
