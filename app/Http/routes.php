@@ -48,3 +48,8 @@ Route::put('Pregunta/{id}','CensoController@updatePregunta');
 Route::delete('Censo/{id}','CensoController@destroy');
 Route::delete('Seccion/{id}','CensoController@destroySeccion');
 Route::delete('Pregunta/{id}','CensoController@destroyPregunta');
+
+/* Router Censador*/
+Route::resource('Censador','CensadorController');
+Route::put('Censador/CambiarClave/{id}','CensadorController@updateClave');
+Route::put('Censador/CambiarEstado/{id}','CensadorController@updateEstado');

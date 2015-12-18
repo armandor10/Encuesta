@@ -1,11 +1,11 @@
-<div class="row" style="width:98%">
+<div class="row" style="width:98%; height: 530px;overflow-y: scroll;">
 
       <table class="bordered striped highlight responsive-table">
         <thead>
           <tr>
           	  <th >No documento</th>
               <th >Nombre</th>
-              <th >Usuario</th>
+              <th >Apellido</th>
               <th> Dirección</th>
               <th >Celular</th>
               <th >Email</th>
@@ -18,7 +18,7 @@
           <tr ng-repeat="p in pollsters | filter:q as results" on-finish-render="ngRepeatFinished">
             <td> {{p.noDocumendo}}</td>
             <td> {{p.name}} </td>
-            <td> {{p.user}} </td>
+            <td> {{p.lastName}} </td>
             <td> {{p.address}} </td>
             <td> {{p.cellphone}} </td>
             <td> {{p.email}} </td>
@@ -27,7 +27,7 @@
                 <div class="switch">
                   <label>
                     Off
-                    <input id="{{p.noDocumendo}}" type="checkbox">
+                    <input ng-click="updateState($index)" id="{{p.noDocumendo}}" type="checkbox">
                     <span class="lever"></span>
                     On
                   </label>
@@ -36,7 +36,7 @@
             <td> 
               <a ng-click="addPollster($index,'U')" href=""><i class="material-icons icon_blue">edit</i></a> 
               <a ng-click="newPassword($index)" href="" style="padding-left:1.5%"> <i class="material-icons icon_blue">https</i> </a> 
-              <a href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>                
+              <a ng-click="openM($index,'mDc')" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>                
             </td>
           </tr>
            <tr class="animate-repeat" ng-if="results.length == 0">
@@ -48,49 +48,50 @@
   <div style="position: absolute;right: 2%;bottom: 7%;">
       <a ng-click="addPollster('0','A')" class="btn-floating btn-large waves-effect waves-light blue lighten-2"><i class="material-icons">add</i></a>
   </div>
-
 </div>
 
 
   <!-- Modal Structure -->
-  <div id="mPollster" class="modal modal-fixed-footer" style="width:80%">
+  <div id="mPollster" class="modal modal-fixed-footer" style="width:80%;height:80%">
     <div class="modal-content">
       <h4>Encuestador</h4>
 
         <div class="row">
           <form class="col s12">
             <div class="row">
+              <div class="input-field col s6">
+                    <i class="material-icons prefix icon_blue">message</i>
+                    <input id="email" type="email" class="validate" ng-model="PollsterSelected.email">
+                    <label class="active" for="email" data-error="wrong" data-success="right">Email</label>
+              </div>
               <div class="input-field col s5">
                 <i class="material-icons prefix icon_blue">credit_card</i>
                 <input id="icon_prefix1" type="text" class="validate" ng-model="PollsterSelected.noDocumendo" >
                 <label class="active" for="icon_prefix1">No Documento</label>
-              </div>
-              <div class="input-field col s7">
-                <i class="material-icons prefix icon_blue">account_circle</i>
-                <input id="icon_prefix" type="text" class="validate" ng-model="PollsterSelected.name">
-                <label class="active" for="icon_prefix">Nombre</label>
               </div>
             </div>
 
             <div class="row">
               <div class="input-field col s6">
                 <i class="material-icons prefix icon_blue">account_circle</i>
-                <input id="icon_prefix2" type="text" class="validate" ng-model="PollsterSelected.user">
-                <label class="active" for="icon_prefix2">Usuario</label>
+                <input id="icon_prefix" type="text" class="validate" ng-model="PollsterSelected.name">
+                <label class="active" for="icon_prefix">Nombre</label>
               </div>
+              <div class="input-field col s6">
+                <i class="material-icons prefix icon_blue">account_circle</i>
+                <input id="icon_prefix2" type="text" class="validate" ng-model="PollsterSelected.lastName">
+                <label class="active" for="icon_prefix2">Apellido</label>
+              </div>
+
+            </div>
+
+             <div class="row">
               <div class="input-field col s6">
                 <i class="material-icons prefix icon_blue">location_on</i>
                 <input id="icon_prefix3" type="text" class="validate" ng-model="PollsterSelected.address">
                 <label class="active" for="icon_prefix3">Dirección</label>
               </div>
-            </div>
 
-             <div class="row">
-              <div class="input-field col s6">
-                    <i class="material-icons prefix icon_blue">message</i>
-                    <input id="email" type="email" class="validate" ng-model="PollsterSelected.email">
-                    <label class="active" for="email" data-error="wrong" data-success="right">Email</label>
-              </div>
               <div class="input-field col s6">
                 <i class="material-icons prefix icon_blue">phone</i>
                 <input id="icon_telephone" type="tel" class="validate" ng-model="PollsterSelected.cellphone">
@@ -103,12 +104,13 @@
         
     </div>
     <div class="modal-footer">
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
+      <a  href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cancelar</a>
+      <a ng-click="save()"  href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
     </div>
   </div>
 
     <!-- Modal Structure -->
-  <div id="mPassword" class="modal modal-fixed-footer" style="height:40%">
+  <div id="mPassword" class="modal modal-fixed-footer" style="height:43%">
     <div class="modal-content">
       <h4>Cambio de contraseña usuario: {{PollsterSelected.user}}</h4>
         <div class="row">
@@ -127,6 +129,18 @@
         </div>
     </div>
     <div class="modal-footer">
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">guardar</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cancelar</a>
+      <a ng-click="updateClave()" href="" class="modal-action waves-effect waves-green btn-flat ">guardar</a>
     </div>
   </div>
+
+      <!-- Modal Structure. Modal of decision -->
+      <div id="mDc" class="modal" style="width: 35%;height:40%">
+        <div class="modal-content">
+          <h4>¿ Esta seguro de eliminar el censador ? {{PollsterSelected.email}} </h4>
+        </div>
+        <div class="modal-footer">
+          <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="delete()">eliminar</a>
+        </div>
+      </div>
