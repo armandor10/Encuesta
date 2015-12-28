@@ -38,6 +38,9 @@ class CensadorController extends Controller
     {
         try {           
             $data = $request->all();
+            
+            $codigoAnt = DB::select('select CODIGO from empleados order by CAST(codigo AS SIGNED) desc LIMIT 1');          
+            
             $censador = new Censador();
             $censador->noDocumento = $data["noDocumento"];
             $censador->nombres = $data["nombres"];
@@ -47,6 +50,7 @@ class CensadorController extends Controller
             $censador->TipoDocumentos_id = '1';
             $censador->direccion = $data["direccion"];
             $censador->telefono = $data["telefono"];
+            $censador->codigo = $codigoAnt[0]->CODIGO + 1;
             $censador->save();
             
             $usuarios = new Usuarios();
