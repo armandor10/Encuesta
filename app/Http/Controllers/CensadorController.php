@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Censador;
 use App\Models\Usuarios;
+use App\Models\Auxventanilla;
 use DB;
 
 class CensadorController extends Controller
@@ -18,7 +19,14 @@ class CensadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public  function index(){
+        
+        return DB::connection('ccv')
+                ->select('select noDocumento from empleados');
+    }
+
+
+    public function indext()
     {
         //
         return DB::select("select empleados.*, usuarios.correo, 
@@ -26,6 +34,41 @@ class CensadorController extends Controller
                  from empleados 
                  LEFT JOIN usuarios ON empleados.id = usuarios.Empleados_id 
                  where cargos_id = :id", ['id'=> 7 ]);
+    }
+    
+    public function getAuxVentanilla()
+    {
+        $data = DB::connection('ccv')
+                ->select("SELECT noDocumento,nombres,apellidos FROM empleados where cargos_id= :id",
+                        ['id'=> 36 ]);
+        
+               $list = array();
+                foreach ($data as &$value) {
+                   //return $value->noDocumento;
+                    $auxventanilla["noDocumento"] = $value->noDocumento;
+                    $auxventanilla["nombre"] = $value->nombres." ".$value->apellidos;
+                    $auxventanilla["inicioStiker"] = "";
+                    $auxventanilla["finStiker"] = "";
+                    $auxventanilla["Entregados"] = "";
+                    
+                    $aux = Auxventanilla::
+                            where('noDocumento', '=', $value->noDocumento)
+                            ->first();                   
+                    if( ! empty($aux) ){
+                        $auxventanilla["inicioStiker"] = $aux->inicioStiker;
+                        $auxventanilla["finStiker"] = $aux->finStiker;
+                        $auxventanilla["Entregados"] = DB::connection('mysql')
+                                            ->table("registro_asignacion")
+                                            ->where('idAuxVentanilla', '=', $aux->id)
+                                            ->count();
+                        
+                    }
+
+                    array_push($list,$auxventanilla);                     
+                }
+                
+        return $list;
+        
     }
 
     /**

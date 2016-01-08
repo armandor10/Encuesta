@@ -1,0 +1,95 @@
+<div class="row" style="margin: 10%">
+
+      <table class="bordered striped highlight responsive-table">
+        <thead>
+          <tr>
+          	  <th >No documento</th>
+              <th >Aux Ventanilla</th>
+              <th >Stikers</th>
+              <th >Entregados</th>
+              <th >&nbsp;</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="d in detailsStikers">
+            <td> {{d.noDocumento}}</td>
+            <td> {{d.nombre}} </td>
+            <td> {{d.stiker}} </td>
+            <td> {{d.entregados}} </td>
+            <td> 
+              <a ng-click="openModalAsignar($index)" href=""><i class="material-icons icon_blue">edit</i></a> 
+              <a ng-click="openModalDetalles($index)" href="" style="padding-left:1.5%"> <i class="material-icons icon_blue">sort</i> </a>               
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modalAsignar" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Asignar Stiker</h4>
+      <div>
+        <strong>Numero Documento:</strong> {{detailsStikerSelected.noDocumento}} </br>
+        <strong>Auxiliar de Ventanilla:</strong> {{detailsStikerSelected.nombre}}
+      </div></br>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s5">
+              <input ng-model="detailsStikerSelected.inicioStiker"  id="fi" type="text" >
+              <label for="fi">Inicio</label>
+            </div>
+            <div class="col s2">
+              <strong >Hasta</strong>
+            </div>
+            <div class="input-field col s5">
+              <input ng-model="detailsStikerSelected.finStiker" id="la" type="text" >
+              <label for="la">Fin</label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <a href="" ng-click="guardarRango()" class="modal-action modal-close waves-effect waves-green btn-flat ">Asignar</a>
+    </div>
+  </div>
+
+    <!-- Modal Structure -->
+  <div id="modalDetalles" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Detalles de Asignación de Stikers </h4>
+      <div>
+        <strong>Numero Documento:</strong> {{detailsStikerSelected.noDocumento}} </br>
+        <strong>Auxiliar de Ventanilla:</strong> {{detailsStikerSelected.nombre}}
+      </div></br>
+
+      <div class="row">
+        <table class="bordered striped highlight responsive-table">
+          <thead>
+            <tr>
+                <th >Matricula</th>
+                <th >Stiker</th>
+                <th >Fecha</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <tr ng-repeat="d in stikers">
+            <td> {{d.noMatricula}}</td>
+            <td> {{d.stiker}} </td>
+            <td> {{d.fecha}} </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">salir</a>
+    </div>
+  </div>

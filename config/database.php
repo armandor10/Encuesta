@@ -64,6 +64,18 @@ return [
             'strict'    => false,
         ],
 
+        'ccv'   => [
+        'driver'     => 'mysql',
+        'host'       => env('COMMENTS_HOST', 'localhost'),
+        'database'   => env('COMMENTS_DATABASE', 'forge'),
+        'username'   => env('COMMENTS_USERNAME', 'forge'),
+        'password'   => env('C_PASSWORD', ''),
+        'charset'    => 'utf8',
+        'collation'  => 'utf8_unicode_ci',
+        'prefix'     => '',
+        'strict'     => false,
+         ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),

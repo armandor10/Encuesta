@@ -19,6 +19,8 @@ Route::get('/m', function () {
     return 'welcome';
 });
 
+/* Router Autenticar*/
+Route::post('usuario/autenticar','autenticarController@autenticar');
 
 
 /* Router Menu*/
@@ -53,3 +55,9 @@ Route::delete('Pregunta/{id}','CensoController@destroyPregunta');
 Route::resource('Censador','CensadorController');
 Route::put('Censador/CambiarClave/{id}','CensadorController@updateClave');
 Route::put('Censador/CambiarEstado/{id}','CensadorController@updateEstado');
+
+/* Router Auxiliar de Ventanilla */
+Route::get('Empleado/AuxVentanilla','CensadorController@getAuxVentanilla');
+Route::post('Empleado/AuxVentanilla/getRangoStiker','AuxVentanillaController@getRangoStiker');
+Route::post('Empleado/AuxVentanilla/saveRango','AuxVentanillaController@saveRango');
+Route::post('Empleado/AuxVentanilla/getRegistroAsignacion','AuxVentanillaController@getRegistroAsignacion');

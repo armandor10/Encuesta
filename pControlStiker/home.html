@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+  <html ng-app="myApp">
+    <head>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="utf-8">
+
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize2.css"  media="screen,projection"/>
+
+      <script src='js/vendor/lodash.min.js'></script>
+      <script src="js/vendor/angular.js"></script>
+      <script src="js/vendor/angular-route.min.js"></script>
+      <script src="js/vendor/angular-resource.js"></script>
+      <script src='js/vendor/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+      <script src='js/vendor/angular-google-maps.min.js'></script>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+      <script type="text/javascript" src="js/vendor/materialize2.js"></script>
+
+      <style type="text/css">
+
+         .material-icons {
+            color: white;
+          }
+
+          .icon_blue{
+            color: #1E90FF;
+          }
+
+          .color_blue_icon{
+            color: #1E90FF;
+          }
+
+           #map {
+            height: 100%;
+          }
+
+          .angular-google-map-container { 
+            height: 100vh /*647px; // Or whatever pixel value you require :)*/
+          }
+
+           /* label color */
+         .input-field label {
+           color: #1E90FF;
+         }
+         /* label focus color */
+         .input-field input[type=text]:focus + label {
+           color: #1E90FF;
+         }
+         /* label underline focus color */
+         .input-field input[type=text]:focus {
+           border-bottom: 1px solid #1E90FF;
+           box-shadow: 0 1px 0 0 #1E90FF;
+         }
+         /* valid color */
+         .input-field input[type=text].valid {
+           border-bottom: 1px solid #1E90FF;
+           box-shadow: 0 1px 0 0 #1E90FF;
+         }
+         /* icon prefix focus color */
+         .input-field .prefix.active {
+           color: #1E90FF;
+         } 
+
+         .modal { max-height: 100%; max-width:100%; }    
+
+          /*.angular-google-map,
+          .angular-google-map-container {
+            width: 100%;
+            height: 100%;
+          }*/
+
+          .card-container.card {
+              width: 350px;
+              padding: 40px 40px;
+          }
+
+          .btn {
+              font-weight: 700;
+              height: 36px;
+              -moz-user-select: none;
+              -webkit-user-select: none;
+              user-select: none;
+              cursor: default;
+          }
+
+          /*
+           * Card component
+           */
+          .card {
+              background-color: #fff;
+              /* just in case there no content*/
+              padding: 20px 25px 30px;
+              margin: 0 auto 25px;
+              margin-top: 50px;
+              /* shadows and rounded borders */
+              -moz-border-radius: 2px;
+              -webkit-border-radius: 2px;
+              border-radius: 2px;
+              -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+              -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+              box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+          }
+
+          .profile-img-card {
+              width: 96px;
+              height: 96px;
+              margin: 0 auto 10px;
+              display: block;
+              -moz-border-radius: 50%;
+              -webkit-border-radius: 50%;
+              border-radius: 50%;
+          }
+
+          /*
+           * Form styles
+           */
+          .profile-name-card {
+              font-size: 16px;
+              font-weight: bold;
+              text-align: center;
+              margin: 10px 0 0;
+              min-height: 1em;
+          }
+
+          .reauth-email {
+              display: block;
+              color: #404040;
+              line-height: 2;
+              margin-bottom: 10px;
+              font-size: 14px;
+              text-align: center;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              -moz-box-sizing: border-box;
+              -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+          }
+
+          .form-signin #inputEmail,
+          .form-signin #inputPassword {
+              direction: ltr;
+              height: 44px;
+              font-size: 16px;
+          }
+
+          .form-signin input[type=email],
+          .form-signin input[type=password],
+          .form-signin input[type=text],
+          .form-signin button {
+              width: 100%;
+              display: block;
+              margin-bottom: 10px;
+              z-index: 1;
+              position: relative;
+              -moz-box-sizing: border-box;
+              -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+          }
+
+          .form-signin .form-control:focus {
+              border-color: #0685FF;
+              outline: 0;
+              -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px #0066CC;
+              box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px #0066CC;
+          }
+
+          .btn-signin {
+              /*background-color: #4d90fe; */
+              background-color: #0066CC;
+              /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+              padding: 0px;
+              font-weight: 700;
+              font-size: 14px;
+              height: 36px;
+              -moz-border-radius: 3px;
+              -webkit-border-radius: 3px;
+              border-radius: 3px;
+              border: none;
+              -o-transition: all 0.218s;
+              -moz-transition: all 0.218s;
+              -webkit-transition: all 0.218s;
+              transition: all 0.218s;
+          }
+
+          .btn-signin:hover,
+          .btn-signin:active,
+          .btn-signin:focus {
+              background-color: #0685FF;
+          }
+
+          .forgot-password {
+              color: #0685FF;
+          }
+
+          .forgot-password:hover,
+          .forgot-password:active,
+          .forgot-password:focus{
+              color: #004e99;
+          }
+
+      </style>
+
+
+    </head>
+    <body >
+
+      <header ng-controller="HomeCtr">
+        <nav class="top-nav" style="margin-left:25%;width:75%" >
+            <div class="nav-wrapper blue lighten-2">
+              <a href="#" class="brand-logo center"><img src="images/logo2.png" style="width:60%"></a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="dropdown-button" href="" data-activates="dropdown1"><i class="material-icons right">more_vert</i></a></li>
+              </ul>
+                      <!-- Dropdown Structure -->
+                      <ul id="dropdown1" class="dropdown-content">
+                        <li><a ng-click="salir()" href="">Salir</a></li>
+                      </ul>
+            </div>
+        </nav>
+        <ul id="nav-mobile" class="side-nav fixed" style="width: 25%;">
+              <div class="card blue lighten-2" style="margin-top:0%">
+                <div class="card-content white-text">
+                  <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+                  <span class="card-title">{{usuario.nombre}}</span></br>
+                  <font size="2">{{usuario.rol}}</font>
+
+                </div>
+              </div>
+
+              <li id="m1" class="bold active"><a href="#/agregarStik" class="waves-effect waves-blue">Agregar Stikers</a></li>
+              <li id="m2" class="bold"><a href="#/asignarStik" class="waves-effect waves-blue">Asignar de Stikers</a></li>
+              <li id="m3" class="bold"><a href="#/consultarStik" class="waves-effect waves-blue">Consultas</a></li>
+
+        </ul>
+      </header>
+
+      <div ng-view style="margin-left:25%;width:75%">
+
+      </div>
+
+
+      <!-- Modules -->
+      <script src="js/app.js"></script>
+
+      <!-- Services -->
+      <script src="js/services/auxVentanillaService.js"></script>
+
+      <!-- Controllers -->
+      <script src="js/controllers/HomeCtr.js"></script>
+      <script src="js/controllers/agregarStikCtr.js"></script>
+      <script src="js/controllers/asignarStikCtr.js"></script>
+      <script src="js/controllers/consultarStikCtr.js"></script>
+
+      <script type="text/javascript">
+        $( document ).ready(function() {
+
+                $('.button-collapse').sideNav({
+                    menuWidth: 300, // Default is 240
+                    edge: 'left', // Choose the horizontal origin
+                    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                  }
+                );        
+        });
+      </script>
+
+    </body>
+ </html>
+
+
+
+

@@ -7,19 +7,18 @@
  */
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Description of Censador
+ * Description of Auxventanilla
  *
  * @author SECREADMIN
  */
-class Censador extends Model {
+class Auxventanilla extends Model {
     
-    protected $connection = 'ccv';
+    protected $connection = 'mysql';
     //put your code here
-    protected $table = 'empleados';
+    protected $table = 'auxventanilla';
 
     public $timestamps = false;
 }
