@@ -9,6 +9,7 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize2.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"  media="screen,projection"/>
 
       <script src='js/vendor/lodash.min.js'></script>
       <script src="js/vendor/angular.js"></script>
@@ -20,6 +21,8 @@
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
       <script type="text/javascript" src="js/vendor/materialize2.js"></script>
+      <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+
 
       <style type="text/css">
 
@@ -250,6 +253,8 @@
 
       <!-- Services -->
       <script src="js/services/auxVentanillaService.js"></script>
+      <script src="js/services/consultarStikService.js"></script>
+      <script src="js/services/agregarStikerService.js"></script>
 
       <!-- Controllers -->
       <script src="js/controllers/HomeCtr.js"></script>
@@ -260,12 +265,22 @@
       <script type="text/javascript">
         $( document ).ready(function() {
 
+                $('#example').dataTable();
+
                 $('.button-collapse').sideNav({
                     menuWidth: 300, // Default is 240
                     edge: 'left', // Choose the horizontal origin
                     closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
                   }
-                );        
+                );
+
+                $(".snumero").keypress(function (e) {
+                  alert("H");
+                   //if the letter is not digit then display error and don't type anything
+                   if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                             return false;
+                  }
+                 });       
         });
       </script>
 

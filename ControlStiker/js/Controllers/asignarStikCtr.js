@@ -6,6 +6,14 @@ app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
 	var rangoI = {};
 	$scope.stikers = [];
 
+  var permisos = function(){
+    var rol = sessionStorage.getItem("rol");
+    if (rol != 'ADMIN') {
+      window.location.href = "#/agregarStik";
+    };
+  };
+  permisos();
+
 	var loadDetails = function(){		
         var list = [];
         var promiseGet = auxVentanillaService.getAll(); //The Method Call from service
@@ -24,6 +32,7 @@ app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
 
           $scope.detailsStikers = list;
 
+
         });     
 	};
 	loadDetails();
@@ -32,7 +41,7 @@ app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
         var promiseGet = auxVentanillaService.getRegistroAsignacion({noDocumento:$scope.detailsStikerSelected.noDocumento}); //The Method Call from service
         promiseGet.then(function (pl) {
           $scope.stikers = pl.data;
-          console.log($scope.stikers );
+          //console.log($scope.stikers );
         },
          function (err) {
                     if(err.status == 401){
@@ -98,5 +107,18 @@ app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
 		$('#modalDetalles').openModal();
 	};
 
+  $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+      $('#example').dataTable({ "bFilter": false,
+                                "language": {
+                                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                                }
+                              });
+  });
+
+  $(".snumero").keypress(function (e) {//if the letter is not digit then display error and don't type anything
+    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+      return false; 
+    }
+  });
 
 });

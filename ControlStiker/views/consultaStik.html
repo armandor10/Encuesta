@@ -1,0 +1,48 @@
+<div class="row" style="margin: 2%">
+
+    <p>
+        <div class="input-field col s5">
+          <input ng-model="filtro" placeholder="Filtrar" id="first_name" type="text" class="validate snumero">
+        </div>
+        <div class="col s7">
+          <strong>Consultar por:</strong>
+          <input class="with-gap" name="group1" type="radio" id="test3" checked />
+          <label for="test3">Stiker</label>
+          <input class="with-gap" name="group1" type="radio" id="test4"  />
+          <label for="test4">Matricula</label>
+          <a class="waves-effect waves-blue btn-flat" ng-click="Buscar()">Buscar</a>
+        </div>
+    </p>
+
+      <table id="example" class="bordered striped highlight responsive-table">
+        <thead>
+          <tr>
+          	  <th >No documento</th>
+              <th >Aux Ventanilla</th>
+              <th >Stiker</th>
+              <th >Matricula</th>
+              <th >Fecha</th>
+          </tr>
+        </thead>
+
+        <tfoot>
+          <tr>
+              <th >No documento</th>
+              <th >Aux Ventanilla</th>
+              <th >Stiker</th>
+              <th >Matricula</th>
+              <th >Fecha</th>
+          </tr>
+        </tfoot>
+
+        <tbody>
+          <tr ng-repeat="s in stikers" on-finish-render="ngRepeatFinished">
+            <td> {{s.noDocumento}} </td>
+            <td> {{s.nombre}} </td>
+            <td> {{s.stiker}} </td>
+            <td> {{s.matricula}} </td>
+            <td> {{s.fecha}} </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Matriculado extends Model 
 {
+    protected $connection = 'mysql';
+    
     protected $table = 'matriculado';
 
     public $timestamps = false;

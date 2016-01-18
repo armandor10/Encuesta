@@ -1,6 +1,6 @@
-<div class="row" style="margin: 10%">
+<div class="row" style="margin: 4%">
 
-      <table class="bordered striped highlight responsive-table">
+      <table id="example" class="bordered striped highlight responsive-table">
         <thead>
           <tr>
           	  <th >No documento</th>
@@ -11,8 +11,18 @@
           </tr>
         </thead>
 
+        <tfoot>
+          <tr>
+              <th >No documento</th>
+              <th >Aux Ventanilla</th>
+              <th >Stikers</th>
+              <th >Entregados</th>
+              <th >&nbsp;</th>
+          </tr>
+        </tfoot>
+
         <tbody>
-          <tr ng-repeat="d in detailsStikers">
+          <tr ng-repeat="d in detailsStikers" on-finish-render="ngRepeatFinished">
             <td> {{d.noDocumento}}</td>
             <td> {{d.nombre}} </td>
             <td> {{d.stiker}} </td>
@@ -39,14 +49,14 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s5">
-              <input ng-model="detailsStikerSelected.inicioStiker"  id="fi" type="text" >
+              <input ng-model="detailsStikerSelected.inicioStiker"  id="fi" type="text" class="snumero" >
               <label for="fi">Inicio</label>
             </div>
             <div class="col s2">
               <strong >Hasta</strong>
             </div>
             <div class="input-field col s5">
-              <input ng-model="detailsStikerSelected.finStiker" id="la" type="text" >
+              <input ng-model="detailsStikerSelected.finStiker" id="la" type="text" class="snumero" >
               <label for="la">Fin</label>
             </div>
           </div>

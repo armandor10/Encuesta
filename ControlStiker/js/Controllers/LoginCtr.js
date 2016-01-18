@@ -25,7 +25,7 @@ app2.controller("LoginCtr", function($scope, loginService) {
                     sessionStorage.setItem("usuario", usu.correo);
                     sessionStorage.setItem("rol", usu.rol);
                     sessionStorage.setItem("nombre", usu.nombres+' '+usu.apellidos);
-                    sessionStorage.setItem("noDocumento", usu.correo);
+                    sessionStorage.setItem("noDocumento", usu.noDocumento);
                     sessionStorage.setItem("Empleados_id", usu.Empleados_id);
                   }); 
                   Materialize.toast("Iniciando sección",3000,'rounded');

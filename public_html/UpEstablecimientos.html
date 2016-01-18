@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+  <html ng-app="myApp">
+    <head>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="utf-8">
+
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize2.css"  media="screen,projection"/>
+
+      <script src='js/vendor/lodash.min.js'></script>
+      <script src="js/vendor/angular.js"></script>
+      <script src="js/vendor/angular-route.min.js"></script>
+      <script src="js/vendor/angular-resource.js"></script>
+      <script src='js/vendor/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+      <script src='js/vendor/angular-google-maps.min.js'></script>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+      <script type="text/javascript" src="js/vendor/materialize2.js"></script>
+      <script type="text/javascript" src="js/vendor/line-navigator.js"></script>
+      <script type="text/javascript" src="js/vendor/file-navigator.js"></script>
+
+
+      <style>
+        #progress_bar {
+          margin: 10px 0;
+          padding: 3px;
+          border: 1px solid #000;
+          font-size: 14px;
+          clear: both;
+          opacity: 0;
+          -moz-transition: opacity 1s linear;
+          -o-transition: opacity 1s linear;
+          -webkit-transition: opacity 1s linear;
+        }
+        #progress_bar.loading {
+          opacity: 1.0;
+        }
+        #progress_bar .percent {
+          background-color: #99ccff;
+          height: auto;
+          width: 0;
+        }
+      </style>
+
+    </head>
+    <body >
+
+      <div style="margin:4%;" ng-controller="upMatriculadosController">
+
+        <input id="file-select" type="file" name="files[]"  />
+        <hr>
+        <button id="read">Read</button>
+        <hr>
+
+        <!--button id="search-beginning">Find first</button>
+        <input type="text" id="find-first-pattern" placeholder="Regexp pattern" />
+        <button id="search-next">Find next</button>
+        <hr-->
+
+        <button id="searchAll">Find all</button>
+        <input type="text" id="find-all-pattern" placeholder="Regexp pattern" />
+        (results are limited to 100 lines max)
+        <hr>
+
+        <div id="meta"></div><br>
+        <div id="output">RESULTS</div>
+
+      </div>
+      <!-- Modules -->
+      <script src="js/app.js"></script>
+
+      <!-- Services -->
+      <script src="js/services/matriculadoService.js"></script>
+
+      <!-- Controllers -->
+      <script src="js/controllers/upMatriculadosController.js"></script>
+
+      <script type="text/javascript">
+
+        $( document ).ready(function() {
+
+
+        });
+
+        function readFile(file, callback){
+            var reader = new FileReader();
+            reader.onload = callback
+            reader.readAsText(file);
+        };
+      </script>
+
+    </body>
+ </html>
+
+
+
+

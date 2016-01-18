@@ -80,7 +80,44 @@ class MatriculadoController extends Controller
         }
 
     }
+    
+    public function upMatriculados(Request $request){
+        try {
+            $data = $request->all();
+            //return $data;
+                if( ! empty($data) ){
+                    foreach ($data as &$value) {                      
+                        $mat = Matriculado::where("noMatricula","=", $value["MAT"])
+                                ->first();
+                        if( empty($mat) ){
+                            $mat = new Matriculado();                      
+                        }
+                            $mat ->noMatricula  = $value["MAT"];
+                            $mat ->razonSocial_nombre = $value["RAZONSOCIAL"];
+                            $mat ->propietario= $value["PROPIETARIO"];
+                            $mat->direccion = $value["DIRECCION"];
+                            $mat ->telefono= $value["TELEFONO1"];
+                            $mat ->actividad = '4';
 
+                            if($value["EST"] == 'MA'){
+                                $mat ->estado = 'A';                            
+                            }elseif ($value["EST"] == 'MC') {
+                                $mat ->estado = 'C';    
+                            }else{
+                                $mat ->estado = 'I'; 
+                            }
+
+                        $mat->save();
+                    }
+                     return JsonResponse::create(array('message' => "Matriculado Guardada Correctamente", "request" => ""), 200);
+                }  
+           
+      
+            }catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo guardar los Matriculados", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
+          
+    }
     /**
      * Display the specified resource.
      *

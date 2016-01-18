@@ -31,6 +31,7 @@ Route::get('Menu','MenuController@index');
 Route::get('Matriculado','MatriculadoController@index');
 Route::post('Matriculado/save','MatriculadoController@save');
 Route::put('Matriculado/{id}', 'MatriculadoController@Actualizar');
+Route::post('Matriculado/upMatriculados','MatriculadoController@upMatriculados');
 
 /* Router Actividad */
 Route::get('Actividad','ActividadController@index');
@@ -61,3 +62,8 @@ Route::get('Empleado/AuxVentanilla','CensadorController@getAuxVentanilla');
 Route::post('Empleado/AuxVentanilla/getRangoStiker','AuxVentanillaController@getRangoStiker');
 Route::post('Empleado/AuxVentanilla/saveRango','AuxVentanillaController@saveRango');
 Route::post('Empleado/AuxVentanilla/getRegistroAsignacion','AuxVentanillaController@getRegistroAsignacion');
+
+/* Router Registro de Asignacion */
+Route::post('regAsignacion/getLikeStiker','regAsignacionController@getLikeStiker');
+Route::post('regAsignacion/getLikeMatricula','regAsignacionController@getLikeMatricula');
+Route::post('regAsignacion','regAsignacionController@store');
