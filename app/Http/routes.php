@@ -32,6 +32,7 @@ Route::get('Matriculado','MatriculadoController@index');
 Route::post('Matriculado/save','MatriculadoController@save');
 Route::put('Matriculado/{id}', 'MatriculadoController@Actualizar');
 Route::post('Matriculado/upMatriculados','MatriculadoController@upMatriculados');
+Route::post('Matriculado/getMatriculado','MatriculadoController@getMatriculado');
 
 /* Router Actividad */
 Route::get('Actividad','ActividadController@index');

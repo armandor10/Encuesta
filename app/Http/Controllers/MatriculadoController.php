@@ -12,6 +12,13 @@ use DB;
 
 class MatriculadoController extends Controller
 {
+    
+    public function  getMatriculado(Request $request){
+        $data = $request->all();
+        $mat = Matriculado::where("noMatricula","=",$data["noMatricula"])->first();
+        return $mat;                
+    }
+
     /**
      * Display a listing of the resource.
      *

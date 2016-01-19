@@ -53,6 +53,26 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
     }
 	};
 
+  $( "#last_name" ).focusout(function() {
+            var promiseGet = agregarStikerService.getMatriculado({noMatricula:$scope.reg.matricula}); //The Method Call from service
+            promiseGet.then(function (pl) {          
+              //console.log(pl.data );
+              //Materialize.toast(pl.data.message,3000,'rounded');  
+              $("#name_matri").val(pl.data.razonSocial_nombre);
+              $( "#agregar" ).removeClass( "disabled" ); 
+            },
+             function (err) {
+                        if(err.status == 401){
+                            alert(err.data.message);
+                            console.log(err.data.exception);
+                        }else{
+                             Materialize.toast("Error al procesar la solicitud",3000,'rounded');                       
+                        }
+                        console.log(err);
+            });
+
+  });
+
   	$(".snumero").keypress(function (e) {//if the letter is not digit then display error and don't type anything
     	if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
       	return false; 

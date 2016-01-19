@@ -2,15 +2,22 @@
     <form class="col s12">
       <div class="row">
         <div class="input-field col s12">
-          <input ng-model="reg.stiker" id="first_name" type="text" class="validate snumero" required>
-          <label for="first_name">Stiker</label>
-        </div>
-        <div class="input-field col s12">
           <input ng-model="reg.matricula" id="last_name" type="text" class="validate snumero" required>
           <label for="last_name">Matricula</label>
         </div>
+
+        <div class="input-field col s12">
+          <input id="name_matri" type="text" value=" " class="validate" disabled required>
+          <label class="active" for="name_matri">Nombre</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input ng-model="reg.stiker" id="first_name" type="text" class="validate snumero" required>
+          <label for="first_name">Stiker</label>
+        </div>
+
         <div class="col s12">
-          <a ng-click="guardar()" href="" class="btn btn-flat waves-effect waves-teal">Agregar</a>
+          <a ng-click="guardar()" id="agregar" href="" class="btn waves-effect waves-teal disabled">Agregar</a>
         </div>  
     </form>
   </div>

@@ -5,4 +5,9 @@ app.service("agregarStikerService", function ($http) {
         return req;
     };
 
+    this.getMatriculado = function(noMatricula){
+        var req = $http.post(uritimeit + '/Matriculado/getMatriculado', noMatricula); 
+        return req;
+    };
+
 });
