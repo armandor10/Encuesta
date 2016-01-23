@@ -34,8 +34,8 @@
             color: #1E90FF;
           }
 
-          .color_blue_icon{
-            color: #1E90FF;
+          .icon_green {
+            color: green;
           }
 
            #map {
@@ -45,29 +45,6 @@
           .angular-google-map-container { 
             height: 100vh /*647px; // Or whatever pixel value you require :)*/
           }
-
-           /* label color */
-         .input-field label {
-           color: #1E90FF;
-         }
-         /* label focus color */
-         .input-field input[type=text]:focus + label {
-           color: #1E90FF;
-         }
-         /* label underline focus color */
-         .input-field input[type=text]:focus {
-           border-bottom: 1px solid #1E90FF;
-           box-shadow: 0 1px 0 0 #1E90FF;
-         }
-         /* valid color */
-         .input-field input[type=text].valid {
-           border-bottom: 1px solid #1E90FF;
-           box-shadow: 0 1px 0 0 #1E90FF;
-         }
-         /* icon prefix focus color */
-         .input-field .prefix.active {
-           color: #1E90FF;
-         } 
 
          .modal { max-height: 100%; max-width:100%; }    
 
@@ -214,9 +191,9 @@
     <body >
 
       <header ng-controller="HomeCtr">
-        <nav class="top-nav" style="margin-left:25%;width:75%" >
-            <div class="nav-wrapper blue lighten-2">
-              <a href="#" class="brand-logo center"><img src="images/logo2.png" style="width:60%"></a>
+        <nav class="top-nav" style="margin-left:20%;width:80%" >
+            <div class="nav-wrapper green lighten-1">
+              <a href="#" class="brand-logo center"><img src="images/logo.png" style="width:60%"></a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a class="dropdown-button" href="" data-activates="dropdown1"><i class="material-icons right">more_vert</i></a></li>
               </ul>
@@ -226,8 +203,8 @@
                       </ul>
             </div>
         </nav>
-        <ul id="nav-mobile" class="side-nav fixed" style="width: 25%;">
-              <div class="card blue lighten-2" style="margin-top:0%">
+        <ul id="nav-mobile" class="side-nav fixed" style="width: 20%;">
+              <div class="card green lighten-1" style="margin-top:0%">
                 <div class="card-content white-text">
                   <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
                   <span class="card-title">{{usuario.nombre}}</span></br>
@@ -236,14 +213,13 @@
                 </div>
               </div>
 
-              <li id="m1" class="bold active"><a href="#/agregarStik" class="waves-effect waves-blue">Agregar Stikers</a></li>
-              <li id="m2" class="bold"><a href="#/asignarStik" class="waves-effect waves-blue">Asignar de Stikers</a></li>
-              <li id="m3" class="bold"><a href="#/consultarStik" class="waves-effect waves-blue">Consultas</a></li>
-
+              <li id="m1" class="bold active"><a href="#/agregarlibro" class="waves-effect waves-blue">Agregar Libro</a></li>
+              <li id="m2" class="bold"><a href="#/agregartemas" class="waves-effect waves-blue">Agregar Temas</a></li>
+              <li id="m3" class="bold"><a href="#/consultar" class="waves-effect waves-blue">Consultas</a></li>
         </ul>
       </header>
 
-      <div ng-view style="margin-left:25%;width:75%">
+      <div ng-view style="margin-left:20%;width:80%">
 
       </div>
 
@@ -257,6 +233,11 @@
       <script src="js/services/agregarStikerService.js"></script>
 
       <!-- Controllers -->
+      <script src="js/controllers/HomeCtr.js"></script>
+      <script src="js/controllers/agregarlibroCtr.js"></script>
+      <script src="js/controllers/agregartemaCtr.js"></script>
+      <script src="js/controllers/consultarCtr.js"></script>
+
 
       <script type="text/javascript">
         $( document ).ready(function() {
@@ -269,6 +250,8 @@
                     closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
                   }
                 );
+
+    
 
                 $(".snumero").keypress(function (e) {
                   alert("H");

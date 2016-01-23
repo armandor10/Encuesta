@@ -1,6 +1,7 @@
 app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
 
 	$scope.detailsStikers = [];
+  var id_cargo_auxventanilla = "36";
 
 	$scope.detailsStikerSelected = {};
 	var rangoI = {};
@@ -22,10 +23,18 @@ app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
             var auxVentanilla = {};
             auxVentanilla.noDocumento = value.noDocumento;
             auxVentanilla.nombre = value.nombre;
-            auxVentanilla.stiker = value.inicioStiker +"-" + value.finStiker;
+            if(value.inicioStiker == null || value.finStiker.length == null){
+              auxVentanilla.stiker = "-";
+
+            }else{
+              auxVentanilla.stiker = value.inicioStiker +"-" + value.finStiker;
+
+            }
             auxVentanilla.entregados = value.Entregados;
             auxVentanilla.inicioStiker = value.inicioStiker;
             auxVentanilla.finStiker = value.finStiker;
+            auxVentanilla.cargo = value.cargo;
+            auxVentanilla.Cargos_id = value.Cargos_id;
 
             list.push(auxVentanilla);           
           });
@@ -94,6 +103,11 @@ app.controller("asignarStikCtr", function($scope,auxVentanillaService) {
 	activeItemMenu();
 
 	$scope.openModalAsignar = function(index){
+    
+    if( $scope.detailsStikers[index].Cargos_id != id_cargo_auxventanilla ){
+      return true;
+    }
+
 		rangoI.inicioStiker= $scope.detailsStikers[index].inicioStiker;
 		rangoI.finStiker = $scope.detailsStikers[index].finStiker;
 		$("label").addClass("active");

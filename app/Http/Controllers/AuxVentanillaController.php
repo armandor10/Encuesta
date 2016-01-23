@@ -12,6 +12,7 @@ use DB;
 
 class AuxVentanillaController extends Controller
 {
+    public static $id_cargo_auxventanilla = "36";
     
     public function getRangoStiker(Request $request)
     {
@@ -113,84 +114,63 @@ class AuxVentanillaController extends Controller
                 ->select('select * from registro_asignacion,matriculado '
                         . 'where registro_asignacion.idmatriculado = matriculado.id && '
                         . 'idAuxVentanilla = '
-                        . '(select id from auxventanilla where noDocumento=:noD)'
+                        . '(select id from auxventanilla where noDocumento=:noD) '
+                        . '&& YEAR(fecha) <= YEAR(now()) '
                         . 'order by fecha desc',
                         ['noD' => $data["noDocumento"]]);        
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getAuxVentanilla()
     {
-        //
+        /* Consulto todas las auxiliares de ventanilla. Sino existen en la tabla 
+         * Auxventanilla, las creo en la misma */
+        
+        $data = DB::connection('ccv')
+                ->select("SELECT noDocumento FROM empleados where cargos_id= :id",
+                        ['id'=> self::$id_cargo_auxventanilla ]);
+        
+        foreach ($data as &$value) {
+            $a = Auxventanilla::where("noDocumento","=",$value->noDocumento)->first();
+            if( empty($a) ){
+                $a = new Auxventanilla();
+                $a->noDocumento = $value->noDocumento;
+                $a->save();
+            }                        
+        }
+        
+        $aux = Auxventanilla::all();
+        
+               $list = array();
+                foreach ($aux as &$value) {
+                    $auxventanilla["noDocumento"] = $value->noDocumento;
+                    $data = DB::connection('ccv')
+                            ->select("SELECT Cargos_id,nombres,apellidos,nombre as cargo FROM empleados as e
+                                     INNER JOIN cargos as c ON e.Cargos_id = c.id 
+                                     where noDocumento= :d",
+                                    ['d'=> $value->noDocumento ]);
+                    
+                    $auxventanilla["nombre"] = $data[0]->nombres." ".$data[0]->apellidos;
+                    $auxventanilla["inicioStiker"] = $value->inicioStiker;
+                    $auxventanilla["finStiker"] = $value->finStiker;
+                    $auxventanilla["Cargos_id"] = $data[0]->Cargos_id;
+                    $auxventanilla["cargo"] = $data[0]->cargo;
+                    $auxventanilla["Entregados"] = DB::connection('mysql')
+                            ->select('select count(id) as count from registro_asignacion '
+                            . 'where idAuxVentanilla = :id'
+                            . '&& YEAR(fecha) <= YEAR(now())',
+                            ['id' => $value->id])[0]->count;
+                            
+                            
+                            DB::connection('mysql')
+                                            ->table("registro_asignacion")
+                                            ->where('idAuxVentanilla', '=', $value->id)
+                                            ->count();
+
+                    array_push($list,$auxventanilla);                     
+                }
+                
+        return $list;
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

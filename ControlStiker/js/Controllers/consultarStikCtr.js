@@ -35,6 +35,11 @@ app.controller("consultarStikCtr", function($scope, consultarStikService) {
 		
 		$scope.stikers = [];
 
+		if($scope.filtro.length < 1){
+			Materialize.toast("Digite la matricula o el stiker",3000,'rounded'); 
+			return true;
+		}
+
 	   if( $('#test3').prop('checked') ){
 
 	        var promiseGet = consultarStikService.getLikeStiker({stiker:$scope.filtro}); //The Method Call from service

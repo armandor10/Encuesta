@@ -20,7 +20,7 @@ Route::get('/m', function () {
 });
 
 /* Router Autenticar*/
-Route::post('usuario/autenticar','autenticarController@autenticar');
+Route::post('usuario/autenticar','AutenticarController@autenticar');
 
 
 /* Router Menu*/
@@ -32,6 +32,7 @@ Route::get('Matriculado','MatriculadoController@index');
 Route::post('Matriculado/save','MatriculadoController@save');
 Route::put('Matriculado/{id}', 'MatriculadoController@Actualizar');
 Route::post('Matriculado/upMatriculados','MatriculadoController@upMatriculados');
+Route::post('Matriculado/upload','MatriculadoController@upload');
 Route::post('Matriculado/getMatriculado','MatriculadoController@getMatriculado');
 
 /* Router Actividad */
@@ -59,7 +60,7 @@ Route::put('Censador/CambiarClave/{id}','CensadorController@updateClave');
 Route::put('Censador/CambiarEstado/{id}','CensadorController@updateEstado');
 
 /* Router Auxiliar de Ventanilla */
-Route::get('Empleado/AuxVentanilla','CensadorController@getAuxVentanilla');
+Route::get('Empleado/AuxVentanilla','AuxVentanillaController@getAuxVentanilla');
 Route::post('Empleado/AuxVentanilla/getRangoStiker','AuxVentanillaController@getRangoStiker');
 Route::post('Empleado/AuxVentanilla/saveRango','AuxVentanillaController@saveRango');
 Route::post('Empleado/AuxVentanilla/getRegistroAsignacion','AuxVentanillaController@getRegistroAsignacion');

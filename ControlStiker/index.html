@@ -35,6 +35,10 @@
 			background-color: #1E90FF;	
 		}
 
+         .material-icons {
+            color: white;
+          }
+
 		.card-container.card {
 		    width: 350px;
 		    padding: 40px 40px;
@@ -175,6 +179,12 @@
 		    you can substitue the span of reauth email for a input with the email and
 		    include the remember me checkbox
 		    -->
+			<div id="footer">
+			    <div style="float: right;"><a href="http://appccvalledupar.co/"><i class="small material-icons">apps</i></a></div> 
+			    <div style="clear: both"></div>
+			</div>
+		    
+
 		    <div class="container" style="height: 100%; background-repeat: no-repeat;background-color: #1E90FF;">
 		        <div class="card card-container">
 		            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
@@ -182,7 +192,7 @@
 		            <p id="profile-name" class="profile-name-card"></p>
 		            <form class="form-signin">
 		                <span id="reauth-email" class="reauth-email"></span>
-		                <input type="email" id="inputEmail" class="form-control" placeholder="Usuario" required autofocus>
+		                <input type="text" id="inputEmail" class="form-control" placeholder="Usuario" required autofocus>
 		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 		                <button ng-click="loguear()" id="btnLogin" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Entrar</button>
 		            </form><!-- /form -->
@@ -195,7 +205,7 @@
       <!-- Services -->
       <script src="js/services/loginService.js"></script>
       <!-- Controllers -->
-      <script src="js/controllers/LoginCtr.js"></script>
+      <script src="js/Controllers/LoginCtr.js"></script>
 
 
       <script type="text/javascript">

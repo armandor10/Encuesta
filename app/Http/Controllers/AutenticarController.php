@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 
-class autenticarController extends Controller
+class AutenticarController extends Controller
 {
     
     public function autenticar(Request $request){
@@ -19,8 +19,9 @@ class autenticarController extends Controller
              $clave = $data['pass'];
               $user = DB::connection('ccv')->
                       select(DB::raw(
-                        "Select u.*, e.nombres, e.apellidos, e.noDocumento from usuarios as u
+                        "Select u.*, e.nombres, e.apellidos, e.noDocumento, c.id as cargo_id, c.nombre as cargo from usuarios as u
                             INNER JOIN empleados as e ON e.id = u.Empleados_id
+                            INNER JOIN cargos as c ON e.Cargos_id = c.id
                          WHERE u.correo =  '".$usuario."'  AND u.clave = '".$clave."'"
                     ));      
            if (empty($user)){

@@ -3,7 +3,8 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 	$scope.reg = {
 		           matricula:"",
 		           stiker:"",
-		           noDocumento:sessionStorage.getItem('noDocumento')
+		           noDocumento:sessionStorage.getItem('noDocumento'),
+               cargo_id:sessionStorage.getItem('cargo_id')
 		         };
 
   	var permisos = function(){
@@ -54,12 +55,21 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 	};
 
   $( "#last_name" ).focusout(function() {
+    if($scope.reg.matricula < 1 || isEmpty($scope.reg.matricula) ){
+      $("#name_matri").val('');
+      return true;
+    }
             var promiseGet = agregarStikerService.getMatriculado({noMatricula:$scope.reg.matricula}); //The Method Call from service
             promiseGet.then(function (pl) {          
               //console.log(pl.data );
               //Materialize.toast(pl.data.message,3000,'rounded');  
               $("#name_matri").val(pl.data.razonSocial_nombre);
-              $( "#agregar" ).removeClass( "disabled" ); 
+              if ( $("#name_matri").val().length > 0 ) {
+                $( "#agregar" ).removeClass( "disabled" );                 
+              }else{
+                Materialize.toast("Matricula no encontrada",3000,'rounded');  
+              }
+              
             },
              function (err) {
                         if(err.status == 401){
@@ -73,10 +83,34 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 
   });
 
+  $( "#last_name" ).focus(function() {
+    $( "#agregar" ).addClass( "disabled" ); 
+  });
+
   	$(".snumero").keypress(function (e) {//if the letter is not digit then display error and don't type anything
     	if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
       	return false; 
     	}
   	});
+
+        function isEmpty(obj) {
+
+            // null and undefined are "empty"
+            if (obj == null) return true;
+
+            // Assume if it has a length property with a non-zero value
+            // that that property is correct.
+            if (obj.length > 0)    return false;
+            if (obj.length === 0)  return true;
+
+            // Otherwise, does it have any properties of its own?
+            // Note that this doesn't handle
+            // toString and valueOf enumeration bugs in IE < 9
+            for (var key in obj) {
+                if (hasOwnProperty.call(obj, key)) return false;
+            }
+
+            return true;
+        };
 
 });

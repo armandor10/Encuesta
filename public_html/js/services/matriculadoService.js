@@ -23,6 +23,12 @@ app.service("matriculadoService", function ($http) {
         return req;
     };
 
+    this.upload = function (matriculados) {
+        //console.log(matriculado)
+        var req = $http.post(uri + '/Matriculado/upload', matriculados); 
+        return req;
+    };
+
     this.put = function (id, matriculado) {       
         var req = $http.put(uri + '/Matriculado/' + id, matriculado);
         return req;        
