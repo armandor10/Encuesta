@@ -75,7 +75,19 @@ return [
         'prefix'     => '',
         'strict'     => false,
          ],
-
+       
+        'biblioteca'   => [
+        'driver'     => 'mysql',
+        'host'       => env('BIBLIOTECA_HOST', 'localhost'),
+        'database'   => env('BIBLIOTECA_DATABASE', 'forge'),
+        'username'   => env('BIBLIOTECA_USERNAME', 'forge'),
+        'password'   => env('BIBLIOTECA_PASSWORD', ''),
+        'charset'    => 'utf8',
+        'collation'  => 'utf8_unicode_ci',
+        'prefix'     => '',
+        'strict'     => false,
+         ],
+        
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),

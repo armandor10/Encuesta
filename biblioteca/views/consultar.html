@@ -2,18 +2,15 @@
 
 	<h3>Consulta de Libros</h3>
 
-      <table id="example" class="bordered striped highlight responsive-table">
-        <thead>
-          <tr>
-          	  <th> Código </th>
-          	  <th> Libro </th>
-              <th> Tema </th>
-              <th> Pagina</th>
-              <th> &nbsp;</th>
-          </tr>
-        </thead>
-
+      <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
         <tbody>
+          <tr ng-repeat="t in data" >
+            <td data-title="'Código'"  sortable="'codigo'" filter="{ 'codigo': 'text' }"> {{t.codigo}} </td>
+            <td data-title="'Libro'"  sortable="'titulo'" filter="{ 'titulo': 'text' }"> {{t.titulo}} </td>
+            <td data-title="'Fecha'"  sortable="'fecha'" filter="{ 'fecha': 'text' }"> {{t.fecha}} </td>
+            <td data-title="'Tema'"  sortable="'tema'" filter="{ 'tema': 'text' }"> {{t.tema}} </td>
+            <td data-title="'Pagina'"  sortable="'pagina'" filter="{ 'pagina': 'text' }"> {{t.pagina}} </td>
+          </tr>
         </tbody>
       </table>
 

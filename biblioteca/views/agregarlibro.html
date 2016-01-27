@@ -1,53 +1,74 @@
-<div class="row" style="margin: 7%">
-	<h3>Agregar Libro</h3>
+<div class="row" style="margin: 0.5%">
 
-  <div class="row">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="password" type="text" class="validate">
-          <label for="password">Código</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="text" class="validate">
-          <label for="email">Titulo</label>
-        </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input type="date" class="datepicker">
-          <label for="email">Fecha</label>
-        </div>
-      </div>
-	    <a data-target="modal1" class="modal-trigger waves-effect waves-light btn green lighten-1" >Agregar</a>
-    </form>
+      <h3>Libros</h3>
+
+  <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
+      <tr ng-repeat="l in data" on-finish-render="ngRepeatFinished">
+          <td data-title="'Codigo'"  sortable="'codigo'" filter="{ 'codigo': 'text' }">
+              {{l.codigo}}</td>
+          <td data-title="'Titulo'" sortable="'titulo'" filter="{ 'titulo': 'text' }">
+              {{l.titulo}}</td>
+          <td data-title="'Fecha'" sortable="'fecha'" filter="{ 'fecha': 'text' }">
+              {{l.fecha}}</td>
+            <td>
+              <a ng-click="editarLibro(l)" href=""><i class="material-icons icon_green">edit</i></a> 
+              <a ng-click="openModalEliminar(l)" href="" style="padding-left:1.5%"> <i class="material-icons" style="color: #ef5350;">remove_circle</i> </a>  
+            </td>
+      </tr>
+  </table>
+
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a ng-click="openModalLibro(true)" class="btn-floating btn-large waves-effect waves-light green lighten-1">
+      <i class="large material-icons">add</i>
+    </a>
   </div>
 
-  <div id="modal1" class="modal">
-    <div class="modal-content ">
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal modal-fixed-footer" style="height:90%">
+    <div class="modal-content">
+      <h3>{{operacion}} Libro</h3>
 
       <div class="row">
-      <div class="col s3" style="margin: 0 auto; width:12%;height::100px;color:white;">
-        <div class="preloader-wrapper big active">
-          <div class="spinner-layer spinner-green-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="icodigo" ng-model="libroselected.codigo" id="password" type="text" class="validate">
+              <label for="password">Código</label>
             </div>
           </div>
-        </div>
-        
+          <div class="row">
+            <div class="input-field col s12">
+              <input ng-model="libroselected.titulo" id="email" type="text" class="validate">
+              <label for="email">Titulo</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="date" class="datepicker">
+              <label for="email">Fecha</label>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="col s6" style=" height::100px"><h4 style="padding-top:2.5%;margin-top:1%"><strong>Cargando...</strong> </h4></div>
 
-      </div>  
     </div>
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar </a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="guardarLibro()">guardar </a>
     </div>
   </div>
+
+  <!-- Modal Structure -->
+  <div id="mEliminar" class="modal modal-fixed-footer" style="width:30%;height:40%">
+    <div class="modal-content">
+      <h4>Eliminar?</h4>
+      <h6>Código: {{libroselected.codigo}}</h6>  </br>
+      <h6>Titulo: {{libroselected.titulo}}</h6> 
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat ">cerrar</a>
+      <a ng-click="eliminarLibro()" href="" class="modal-action modal-close waves-effect waves-green btn-flat ">Eliminar</a>
+    </div>
+  </div>
+
 </div>

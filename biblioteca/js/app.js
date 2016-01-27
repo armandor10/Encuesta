@@ -1,6 +1,6 @@
 var uritimeit = "../public";
 
-var app = angular.module("myApp", ['ngRoute','ngResource']);
+var app = angular.module("myApp", ['ngRoute','ngResource','ngTable']);
 var app2 = angular.module("myApp2", ['ngRoute','ngResource']);
 
 app.directive('onFinishRender', function ($timeout) {
@@ -20,6 +20,7 @@ app.config(function($routeProvider) {
   $routeProvider
    .when('/agregarlibro', {
     controller: 'agregarlibroCtr',
+    controllerAs: 'vm',
     templateUrl: 'views/agregarlibro.html'
   })
    .when('/agregartemas', {

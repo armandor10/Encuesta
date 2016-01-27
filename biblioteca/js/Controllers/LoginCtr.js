@@ -1,4 +1,6 @@
 app2.controller("LoginCtr", function($scope, loginService) {
+  var cargo_id_presidencia = "9";
+  var cargo_id_digitalizador = "35";
 
   function autenticar(){
     if( sessionStorage.getItem("usuario") ){
@@ -21,6 +23,14 @@ app2.controller("LoginCtr", function($scope, loginService) {
 
                 var ltUsu = JSON.parse(pl.data.request);
                 if( pl.data.message == 'OK' ){
+
+                  //console.log( ltUsu[0].cargo_id );
+                    if( cargo_id_digitalizador != ltUsu[0].cargo_id && 
+                      cargo_id_presidencia != ltUsu[0].cargo_id ) {
+                      Materialize.toast("No tiene permisos para entrar a esta aplicación",3000,'rounded');
+                      return true;
+                    }
+
                   angular.forEach(ltUsu, function(usu, key) {
                     sessionStorage.setItem("usuario", usu.correo);
                     sessionStorage.setItem("rol", usu.rol);
@@ -30,7 +40,7 @@ app2.controller("LoginCtr", function($scope, loginService) {
                     sessionStorage.setItem("cargo_id", usu.cargo_id);
                     sessionStorage.setItem("cargo", usu.cargo);
                   }); 
-                  Materialize.toast("Iniciando sección",3000,'rounded');
+                  Materialize.toast("Iniciando Sesión",3000,'rounded');
                   window.location.href = "home.html";
                 }else{
                   Materialize.toast("Usuario o Contraseña incorrecta",3000,'rounded');

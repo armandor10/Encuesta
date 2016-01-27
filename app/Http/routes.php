@@ -69,3 +69,6 @@ Route::post('Empleado/AuxVentanilla/getRegistroAsignacion','AuxVentanillaControl
 Route::post('regAsignacion/getLikeStiker','regAsignacionController@getLikeStiker');
 Route::post('regAsignacion/getLikeMatricula','regAsignacionController@getLikeMatricula');
 Route::post('regAsignacion','regAsignacionController@store');
+
+/* Router Biblioteca*/
+include 'Routes/routeLibro.php';
