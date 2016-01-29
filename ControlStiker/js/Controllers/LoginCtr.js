@@ -30,7 +30,7 @@ app2.controller("LoginCtr", function($scope, loginService) {
                     sessionStorage.setItem("cargo_id", usu.cargo_id);
                     sessionStorage.setItem("cargo", usu.cargo);
                   }); 
-                  Materialize.toast("Iniciando sección",3000,'rounded');
+                  Materialize.toast("Iniciando Sesión",3000,'rounded');
                   window.location.href = "home.html";
                 }else{
                   Materialize.toast("Usuario o Contraseña incorrecta",3000,'rounded');

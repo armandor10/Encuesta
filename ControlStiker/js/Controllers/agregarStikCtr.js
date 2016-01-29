@@ -7,6 +7,15 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
                cargo_id:sessionStorage.getItem('cargo_id')
 		         };
 
+  function initialize() {
+    $scope.reg = {
+                 matricula:"",
+                 stiker:"",
+                 noDocumento:sessionStorage.getItem('noDocumento'),
+                 cargo_id:sessionStorage.getItem('cargo_id')
+               };
+  };
+
   	var permisos = function(){
     	var rol = sessionStorage.getItem("rol");
     	if (rol == 'ADMIN') {
@@ -37,7 +46,11 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
             var promiseGet = agregarStikerService.add($scope.reg ); //The Method Call from service
             promiseGet.then(function (pl) {          
               //console.log(pl.data );
-              Materialize.toast(pl.data.message,3000,'rounded');  
+              Materialize.toast(pl.data.message,3000,'rounded');
+              if( pl.data.estado == "OK" ) {
+                initialize();  
+              }
+              
             },
              function (err) {
                         if(err.status == 401){
@@ -64,11 +77,16 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
               //console.log(pl.data );
               //Materialize.toast(pl.data.message,3000,'rounded');  
               $("#name_matri").val(pl.data.razonSocial_nombre);
-              if ( $("#name_matri").val().length > 0 ) {
-                $( "#agregar" ).removeClass( "disabled" );                 
-              }else{
+              if( isEmpty(pl.data) ){
                 Materialize.toast("Matricula no encontrada",3000,'rounded');  
               }
+              /*
+              if ( $("#name_matri").val().length > 0 ) {
+                                
+              }else{
+                Materialize.toast("Matricula no encontrada",3000,'rounded');  
+              }*/
+              $( "#agregar" ).removeClass( "disabled" ); 
               
             },
              function (err) {

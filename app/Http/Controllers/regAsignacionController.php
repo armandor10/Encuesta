@@ -76,35 +76,6 @@ class regAsignacionController extends Controller
         return $list; 
     }
 
-
-
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->all();
@@ -128,16 +99,22 @@ class regAsignacionController extends Controller
                     ->select("SELECT * FROM matriculado where noMatricula='".$data['matricula']."'");               
                 
                 $regAsig = new regAsignacion();
-                
-                    $regAsig->idmatriculado = $matriculado[0]->id;
+                if( empty($matriculado) ){
+                    $matriculado = new Matriculado();
+                    $matriculado->noMatricula = $data['matricula'];
+                    $matriculado->save();
+                    
+                    $regAsig->idmatriculado = $matriculado->id;                    
+                }  else {
+                    $regAsig->idmatriculado = $matriculado[0]->id; 
                     $reg = DB::connection('mysql')
-                            ->select("SELECT * FROM registro_asignacion where idmatriculado='".$matriculado[0]->id."' "
+                           ->select("SELECT * FROM registro_asignacion where idmatriculado='".$matriculado[0]->id."' "
                                     . "&& YEAR(fecha) <= YEAR(now())");
                     if( ! empty($reg) ){
-                        return array('estado'=>'OK','message'=>'La matrícula ya tiene un Stiker asignado');                                                 
+                       return array('estado'=>'KO','message'=>'La matrícula ya tiene un Stiker asignado');                                                 
                     }
-                
-               
+                }
+  
                 $regAsig->stiker = $data['stiker'];
                 $regAsig->fecha = DB::connection('mysql')->select("select now() as now")[0]->now ;
                 $regAsig->idAuxVentanilla = $aux->id;
@@ -175,12 +152,10 @@ class regAsignacionController extends Controller
                             ->select("SELECT * FROM registro_asignacion where idmatriculado='".$matriculado[0]->id."' "
                                     . "&& YEAR(fecha) <= YEAR(now())");
                     if( ! empty($reg) ){
-                        return array('estado'=>'OK','message'=>'La matrícula ya tiene un Stiker asignado');                                                 
-                    }
-                    
+                        return array('estado'=>'KO','message'=>'La matrícula ya tiene un Stiker asignado');                                                 
+                    }                    
                 }
-                
-               
+                               
                 $regAsig->stiker = $data['stiker'];
                 $regAsig->fecha = DB::connection('mysql')->select("select now() as now")[0]->now ;
                 $regAsig->idAuxVentanilla = $aux->id;
