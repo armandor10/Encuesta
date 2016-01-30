@@ -31,6 +31,7 @@ Route::get('Menu','MenuController@index');
 Route::get('Matriculado','MatriculadoController@index');
 Route::post('Matriculado/save','MatriculadoController@save');
 Route::put('Matriculado/{id}', 'MatriculadoController@Actualizar');
+Route::post('Matriculado/upload','MatriculadoController@upload');
 Route::post('Matriculado/upMatriculados','MatriculadoController@upMatriculados');
 Route::post('Matriculado/upload','MatriculadoController@upload');
 Route::post('Matriculado/getMatriculado','MatriculadoController@getMatriculado');

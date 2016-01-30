@@ -12,7 +12,57 @@ use DB;
 
 class MatriculadoController extends Controller
 {
-    
+    public function upload(Request $request){
+        $fila = 1;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $file->move( public_path().'/temp', $file->getClientOriginalName() );
+            
+            $fila = 1;
+            if (($gestor = fopen( public_path().'/temp/m.csv', "r") ) !== FALSE) {
+                while (($datos = fgetcsv($gestor, 100000, ",")) !== FALSE) {
+                    $numero = count($datos);
+                    //echo "<p> $numero de campos en la línea $fila: <br /></p>\n";
+                    $fila++;
+                    
+                    if( $fila > 1 && is_numeric($datos[0]) ){
+                        $mat = Matriculado::where("noMatricula","=", $datos[0])
+                                ->first();
+                        if( empty($mat) ){
+                            $mat = new Matriculado();                      
+                        }
+                        
+                        $mat ->noMatricula  = $datos[0];
+                        $mat ->razonSocial_nombre = $datos[1];
+                        $mat ->propietario= $datos[4];
+                        $mat->direccion = $datos[2];
+                        $mat ->telefono= $datos[5];
+                        $mat ->actividad = '4';
+
+                        if( $datos[3] == 'MA' ){
+                           $mat ->estado = 'A';                            
+                        }elseif ($value["EST"] == 'MC') {
+                           $mat ->estado = 'C';    
+                        } else {
+                           $mat ->estado = 'I'; 
+                        }
+
+                        $mat->save();
+                        
+                    }
+                        //echo $datos[$c] . "<br />\n";
+                    
+                }
+                fclose($gestor);
+            }
+            
+            return 'Cargado';
+        }else{
+            return 'No cargado';
+        } 
+        //return $request->file();
+    }
+
     public function  getMatriculado(Request $request){
         $data = $request->all();
         $mat = Matriculado::where("noMatricula","=",$data["noMatricula"])->first();
