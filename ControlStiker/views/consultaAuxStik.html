@@ -1,0 +1,15 @@
+<div class="row" style="margin: 3%">
+	<div class="input-field col s6" style="width: 50%;margin: 0 auto;">
+          <input id="fecha" type="date">
+          <label for="fecha" class="active">Fecha</label>
+	</div>
+      <table ng-table="tableParams" id="example" class="bordered striped highlight responsive-table" show-filter="true">
+        <tbody>
+          <tr ng-repeat="r in data" on-finish-render="ngRepeatFinished">
+          	<td data-title="'Matricula'"  sortable="'noMatricula'" filter="{ 'noMatricula': 'text' }"> {{r.noMatricula}} </td>
+          	<td data-title="'Nombre'"  sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }"> {{r.razonSocial_nombre}} </td>
+          	<td data-title="'Stiker'"  sortable="'stiker'" filter="{ 'stiker': 'text' }"> {{r.stiker}} </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

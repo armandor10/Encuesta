@@ -116,7 +116,7 @@ class regAsignacionController extends Controller
                 }
   
                 $regAsig->stiker = $data['stiker'];
-                $regAsig->fecha = DB::connection('mysql')->select("select now() as now")[0]->now ;
+                $regAsig->fecha = $data['fecha'] ;
                 $regAsig->idAuxVentanilla = $aux->id;
                 
                 $regAsig->save();
@@ -172,6 +172,21 @@ class regAsignacionController extends Controller
             return array('estado'=>'KO','message'=>'Este Stiker no está dentro de su rango');
         }
                 
+    }
+    
+    public function getRegistroAuxFecha(Request $request){
+        $data = $request->all();
+        /*return DB::connection('mysql')
+                ->select("select * from registro_asignacion where fecha>='". $data["fecha"]."'");*/
+        return  DB::connection('mysql')
+                ->select('select * from registro_asignacion,matriculado '
+                        . 'where registro_asignacion.idmatriculado = matriculado.id '
+                        . '&& idAuxVentanilla = (select id from auxventanilla where noDocumento=:noD) '
+                        . "&& fecha >= CAST( '". $data["fecha"]."' AS DATE ) "
+                        . "&& fecha < CAST( DATE_ADD('". $data["fecha"]."',INTERVAL 1 DAY) AS DATE )"
+                        . 'order by fecha desc',
+                        ['noD' => $data["noDocumento"]]);
+        
     }
 
 }

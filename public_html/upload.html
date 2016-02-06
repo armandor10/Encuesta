@@ -48,10 +48,7 @@
       <form name="myForm">
         <fieldset>
           <legend>Upload on form submit</legend>
-          Username:
-          <input type="text" name="userName" ng-model="username" size="31" required>
-          <i ng-show="myForm.userName.$error.required">*required</i>
-          <br>Photo:
+          <br>Archivo:
           <input type="file" ngf-select ng-model="picFile" name="file"    
                  accept=".csv" ngf-max-size="100MB" required
                  ngf-model-invalid="errorFiles">
@@ -81,7 +78,7 @@
             $scope.uploadPic = function(file) {
             file.upload = Upload.upload({
               url: '../public/Matriculado/upload',
-              data: {file: file, username: $scope.username},
+              data: {file: file, username: 'm'},
             });
 
             file.upload.then(function (response) {

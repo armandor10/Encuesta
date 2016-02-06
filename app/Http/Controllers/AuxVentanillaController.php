@@ -150,6 +150,7 @@ class AuxVentanillaController extends Controller
                                     ['d'=> $value->noDocumento ]);
                     
                     $auxventanilla["nombre"] = $data[0]->nombres." ".$data[0]->apellidos;
+                    //return $auxventanilla["nombre"];
                     $auxventanilla["inicioStiker"] = $value->inicioStiker;
                     $auxventanilla["finStiker"] = $value->finStiker;
                     $auxventanilla["Cargos_id"] = $data[0]->Cargos_id;

@@ -154,7 +154,7 @@ app.controller("upMatriculadosController", function($scope, matriculadoService) 
                             matricula[header[j]] = line[j];
                           }
 
-                          if(matricula["OJ2"] == "ESTABLECIMIENTO"){
+                          //if(matricula["OJ2"] == "ESTABLECIMIENTO"){
                             matriculas.push(matricula);
                             if( k == 1000 ){
                               doSomething(saveMatriculado);
@@ -163,7 +163,7 @@ app.controller("upMatriculadosController", function($scope, matriculadoService) 
                             }else {
                               k++;
                             }
-                          }
+                          //}
 
                           if( results.length - 1 == i && ! isEmpty(matriculas) ){
                             doSomething(saveMatriculado);

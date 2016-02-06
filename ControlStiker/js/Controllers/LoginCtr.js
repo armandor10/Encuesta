@@ -10,7 +10,17 @@ app2.controller("LoginCtr", function($scope, loginService) {
   };
   autenticar();
 
+  $('.enter').keypress(function(e) {
+      if(e.which == 13) {
+          $scope.loguear();
+      }
+  });
+
 	$scope.loguear =function(){
+
+    if($("#inputEmail").val().length < 1 || $("#inputPassword").val().length < 1 ){
+      return true;
+    }
 			  var usuario = {
 			  	               username: $("#inputEmail").val(),
 			  	               pass: $("#inputPassword").val()

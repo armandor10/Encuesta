@@ -18,39 +18,52 @@ class MatriculadoController extends Controller
             $file = $request->file('file');
             $file->move( public_path().'/temp', $file->getClientOriginalName() );
             
-            $fila = 1;
-            if (($gestor = fopen( public_path().'/temp/m.csv', "r") ) !== FALSE) {
+            $fila = 0;
+            if (($gestor = fopen( public_path().'/temp/m6.csv', "r") ) !== FALSE) {
                 while (($datos = fgetcsv($gestor, 100000, ",")) !== FALSE) {
                     $numero = count($datos);
                     //echo "<p> $numero de campos en la línea $fila: <br /></p>\n";
-                    $fila++;
                     
-                    if( $fila > 1 && is_numeric($datos[0]) ){
-                        $mat = Matriculado::where("noMatricula","=", $datos[0])
-                                ->first();
-                        if( empty($mat) ){
-                            $mat = new Matriculado();                      
-                        }
-                        
-                        $mat ->noMatricula  = $datos[0];
-                        $mat ->razonSocial_nombre = $datos[1];
-                        $mat ->propietario= $datos[4];
-                        $mat->direccion = $datos[2];
-                        $mat ->telefono= $datos[5];
-                        $mat ->actividad = '4';
+                    if( $fila >= 1) {
+                        $estable = explode( ";", (string)$datos[0] );//split('[;.-]', (string)$datos[0]);
+                        if( is_numeric($estable[0]) ){
+                              if ($estable[0] == "109419" ){
+                                    return $datos[0]; 
+                                }
+                            if( $estable[0] == "109250" || $estable[0] == "109381" ){
+                              
+                                //return $estable;                                 
+                            }else{
+                            $mat = Matriculado::where("noMatricula","=", $estable[0])
+                                    ->first();
+                            if( empty($mat) ){
+                                $mat = new Matriculado();                      
+                            }
 
-                        if( $datos[3] == 'MA' ){
-                           $mat ->estado = 'A';                            
-                        }elseif ($value["EST"] == 'MC') {
-                           $mat ->estado = 'C';    
-                        } else {
-                           $mat ->estado = 'I'; 
-                        }
+                            $mat ->noMatricula  = $estable[0];
+                            $mat ->razonSocial_nombre = $estable[1];
+                            $mat ->propietario= $estable[4];
+                            $mat->direccion = $estable[2];
+                            $mat ->telefono= $estable[5];
+                            $mat ->actividad = '4';
 
-                        $mat->save();
-                        
+                            if( $estable[3] == 'MA' ){
+                               $mat ->estado = 'A';                            
+                            }elseif ($estable[3] == 'MC') {
+                               $mat ->estado = 'C';    
+                            } else {
+                               $mat ->estado = 'I'; 
+                            }
+
+                            $mat->save();
+                            
+                            }
+
+                        } 
+                        //(string)$datos[0]
                     }
-                        //echo $datos[$c] . "<br />\n";
+                    $fila++;
+                    //echo $datos[$c] . "<br />\n";
                     
                 }
                 fclose($gestor);

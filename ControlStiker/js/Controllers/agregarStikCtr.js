@@ -1,10 +1,28 @@
 app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 
+  function getFecha(){
+
+      var today = new Date();
+      //alert(today.toLocaleTimeString());
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+
+      var yyyy = today.getFullYear();
+      if(dd<10){
+          dd='0'+dd
+      } 
+      if(mm<10){
+          mm='0'+mm
+      } 
+      return yyyy + '/' + mm + '/' + dd + ' ' + today.toLocaleTimeString();
+  };
+
 	$scope.reg = {
 		           matricula:"",
 		           stiker:"",
 		           noDocumento:sessionStorage.getItem('noDocumento'),
-               cargo_id:sessionStorage.getItem('cargo_id')
+               cargo_id:sessionStorage.getItem('cargo_id'),
+               fecha: getFecha()
 		         };
 
   function initialize() {
@@ -12,7 +30,8 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
                  matricula:"",
                  stiker:"",
                  noDocumento:sessionStorage.getItem('noDocumento'),
-                 cargo_id:sessionStorage.getItem('cargo_id')
+                 cargo_id:sessionStorage.getItem('cargo_id'),
+                 fecha: getFecha()
                };
   };
 
@@ -25,7 +44,7 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
   	permisos();
 
 	var activeItemMenu = function(){
-		for (i = 1; i <= 3; i++) { 
+		for (i = 1; i <= 4; i++) { 
 			$( "#m" + i ).removeClass( "active" );           
 		}
 		$( "#m" + 1 ).addClass( "active" );  
@@ -42,12 +61,14 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 
     }else{
         if(isnum1 && isnum2){
-     
+
+          console.log($scope.reg);     
             var promiseGet = agregarStikerService.add($scope.reg ); //The Method Call from service
             promiseGet.then(function (pl) {          
               //console.log(pl.data );
               Materialize.toast(pl.data.message,3000,'rounded');
               if( pl.data.estado == "OK" ) {
+                $("#name_matri").val('');
                 initialize();  
               }
               

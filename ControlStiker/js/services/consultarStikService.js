@@ -10,4 +10,9 @@ app.service("consultarStikService", function ($http) {
         return req;
     };
 
+    this.getRegistroAsignacion = function (reg) {
+        var req = $http.post(uritimeit + '/regAsignacion/getRegistroAsignacion', reg); 
+        return req;
+    };
+
 });
