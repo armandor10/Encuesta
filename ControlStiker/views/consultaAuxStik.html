@@ -1,5 +1,5 @@
 <div class="row" style="margin: 3%">
-	<div class="input-field col s6" style="width: 50%;margin: 0 auto;">
+	<div class="input-field col s6 offset-s3" style="width: 50%;margin: 0 auto;">
           <input id="fecha" type="date">
           <label for="fecha" class="active">Fecha</label>
 	</div>
@@ -9,6 +9,7 @@
           	<td data-title="'Matricula'"  sortable="'noMatricula'" filter="{ 'noMatricula': 'text' }"> {{r.noMatricula}} </td>
           	<td data-title="'Nombre'"  sortable="'razonSocial_nombre'" filter="{ 'razonSocial_nombre': 'text' }"> {{r.razonSocial_nombre}} </td>
           	<td data-title="'Stiker'"  sortable="'stiker'" filter="{ 'stiker': 'text' }"> {{r.stiker}} </td>
+            <td> <a ng-click="imprimir(r)" href=""> <i class="material-icons icon_blue">print</i> </a> </td>
           </tr>
         </tbody>
       </table>

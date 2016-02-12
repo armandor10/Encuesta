@@ -1,6 +1,6 @@
 var uritimeit = "../public";
 
-var app = angular.module("myApp", ['ngRoute','ngResource','ngTable']);
+var app = angular.module("myApp", ['ngRoute','ngTable']);
 var app2 = angular.module("myApp2", ['ngRoute','ngResource']);
 
 app.directive('onFinishRender', function ($timeout) {

@@ -71,6 +71,7 @@ Route::post('regAsignacion/getLikeStiker','regAsignacionController@getLikeStiker
 Route::post('regAsignacion/getLikeMatricula','regAsignacionController@getLikeMatricula');
 Route::post('regAsignacion','regAsignacionController@store');
 Route::post('regAsignacion/getRegistroAsignacion','regAsignacionController@getRegistroAuxFecha');
+Route::post('regAsignacion/getconsecutivo','regAsignacionController@consecutivoAux');
 
 /* Router Biblioteca*/
 include 'Routes/routeLibro.php';

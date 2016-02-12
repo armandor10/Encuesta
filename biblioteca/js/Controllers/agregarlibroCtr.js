@@ -65,6 +65,7 @@ app.controller("agregarlibroCtr", function($scope, agregarlibroService,$filter, 
 			$scope.libros = pl.data;
 			//$scope.tableParams.reload();
 			loadngtable();
+			$('#loading').closeModal();
 
 		},function (err) {
 			if(err.status == 401){

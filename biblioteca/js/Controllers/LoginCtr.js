@@ -26,7 +26,8 @@ app2.controller("LoginCtr", function($scope, loginService) {
 
                   //console.log( ltUsu[0].cargo_id );
                     if( cargo_id_digitalizador != ltUsu[0].cargo_id && 
-                      cargo_id_presidencia != ltUsu[0].cargo_id ) {
+                      cargo_id_presidencia != ltUsu[0].cargo_id &&
+                      ltUsu[0].cargo_id != '5') {
                       Materialize.toast("No tiene permisos para entrar a esta aplicación",3000,'rounded');
                       return true;
                     }

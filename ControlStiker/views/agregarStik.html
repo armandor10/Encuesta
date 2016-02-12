@@ -1,23 +1,33 @@
-  <div class="row" style="margin: 17%">
+<div class="row" style="margin: 15%">
     <form class="col s12">
       <div class="row">
         <div class="input-field col s12">
           <input ng-model="reg.matricula" id="last_name" type="text" class="validate snumero" required>
-          <label for="last_name">Matricula</label>
+          <label class="active" for="last_name">Matricula</label>
         </div>
 
         <div class="input-field col s12">
-          <input id="name_matri" type="text" value=" " class="validate" disabled required>
+          <input id="name_matri" type="text" value=" " class="validate" required>
           <label class="active" for="name_matri">Nombre</label>
         </div>
 
         <div class="input-field col s12">
           <input ng-model="reg.stiker" id="first_name" type="text" class="validate snumero" required>
-          <label for="first_name">Stiker</label>
+          <label class="active" for="first_name">Stiker</label>
         </div>
 
         <div class="col s12">
           <a ng-click="guardar()" id="agregar" href="" class="btn waves-effect waves-teal disabled">Agregar</a>
         </div>  
     </form>
+</div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h5>Imprimir Stiker?</h5>
+    </div>
+    <div class="modal-footer">
+      <a ng-click="noImprimir()" href="" class=" modal-action modal-close waves-effect waves-green btn-flat">No</a>
+      <a ng-click="imprimir()" href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Si</a>
+    </div>
   </div>

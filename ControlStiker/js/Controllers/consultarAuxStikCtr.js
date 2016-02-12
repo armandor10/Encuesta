@@ -29,7 +29,7 @@ app.controller("consultarAuxStikCtr", function( $scope, consultarStikService,$fi
 		//$scope.tableParams = new NgTableParams({}, { dataset: $scope.libros});
 		$scope.tableParams =  new NgTableParams({
 	                page: 1,
-	                count: 5
+	                count: 10
 	            }, {
 	                total: $scope.regAsignacion.length, 
 	                getData: function ($defer, params) {
@@ -99,6 +99,23 @@ app.controller("consultarAuxStikCtr", function( $scope, consultarStikService,$fi
 	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
 		$('#loading').closeModal();
 	});
+
+  $scope.imprimir = function(m){
+              $.get("printStiker.html", function (data) {
+
+                  data = data.replace("{{nombre}}", m.razonSocial_nombre) ;
+                  data = data.replace("{{matricula}}", m.noMatricula );
+                  //console.log(data);
+
+                  // Esta es la parte que te abre la ventana de imprecion...
+                  var win;
+                  win = window.open();
+                  win.document.write(data);
+                  win.print();
+                  win.close();
+
+              });
+  };
 
         function isEmpty(obj) {
 

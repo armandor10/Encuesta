@@ -84,6 +84,7 @@ app.controller("agregartemaCtr", function($scope, agregarlibroService,$filter, N
 
 		promiseGet.then(function (pl) {
 			if( $scope.temaSelected.nuevo ){
+				$scope.temaSelected.id = pl.data.request.id;
 				$scope.libroSelected.temas.push($scope.temaSelected);
 
 			}else{

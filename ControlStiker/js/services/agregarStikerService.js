@@ -9,5 +9,10 @@ app.service("agregarStikerService", function ($http) {
         var req = $http.post(uritimeit + '/Matriculado/getMatriculado', noMatricula); 
         return req;
     };
+    
+    this.getconsecutivo = function(noDocumento){
+        var req = $http.post(uritimeit + '/regAsignacion/getconsecutivo', noDocumento); 
+        return req;
+    };
 
 });

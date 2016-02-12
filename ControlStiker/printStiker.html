@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+  <html ng-app="myApp2">
+    <head>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="utf-8">
+
+	<style type="text/css">
+	    body {
+	        margin: 0;
+	        padding: 0;
+	        background-color: #FAFAFA;
+	        font: 9pt "Arial";
+	    }
+	    * {
+	        box-sizing: border-box;
+	        -moz-box-sizing: border-box;
+	    }
+	    .page {
+	        width: 21cm;
+	        min-height: 29.7cm;
+	        padding-top: 0.1cm;
+	        margin: 0 auto;
+	        border: 1px #D3D3D3 solid;
+	        border-radius: 5px;
+	        background: white;
+	        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	    }
+	    .subpage {
+	        padding: 1cm;
+	        border: 5px red solid;
+	        height: 1cm;
+	        outline: 2cm #FFEAEA solid;
+	    }
+	    @page {
+	        /*size: A4;*/
+	        size:10cm 2cm;
+	        margin: 0;
+	    }
+	    @media print {
+	        .page {
+	            margin: 0;
+	            border: initial;
+	            border-radius: initial;
+	            width: initial;
+	            min-height: initial;
+	            box-shadow: initial;
+	            background: initial;
+	            page-break-after: always;
+	        }
+	    }
+	</style>
+      
+    </head>
+    <body >
+		<div class="book">
+		    <div class="page">
+		      <center> {{nombre}} </center> 
+		      <center> MATRICULA {{matricula}} </center> 
+		    </div>
+		</div>
+    </body>
+ </html>

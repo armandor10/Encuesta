@@ -1,5 +1,17 @@
 app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 
+  $scope.aux = {};
+
+    var permisos = function(){
+      var rol = sessionStorage.getItem("rol");
+      if (rol == 'ADMIN') {
+        window.location.href = "#/asignarStik";
+        return false;
+      } else {
+        return true;
+      }
+    };
+
   function getFecha(){
 
       var today = new Date();
@@ -35,14 +47,6 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
                };
   };
 
-  	var permisos = function(){
-    	var rol = sessionStorage.getItem("rol");
-    	if (rol == 'ADMIN') {
-      	window.location.href = "#/asignarStik";
-    	};
-  	};
-  	permisos();
-
 	var activeItemMenu = function(){
 		for (i = 1; i <= 4; i++) { 
 			$( "#m" + i ).removeClass( "active" );           
@@ -51,25 +55,57 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
 	};
 	activeItemMenu();
 
+  var getConsecutivo = function(){
+            var promiseGet = agregarStikerService.getconsecutivo({noDocumento:$scope.reg.noDocumento}); //The Method Call from service
+            promiseGet.then(function (pl) {
+              $scope.reg.stiker = pl.data;
+
+            },
+             function (err) {
+                        if(err.status == 401){
+                            alert(err.data.message);
+                            console.log(err.data.exception);
+                        }else{
+                             Materialize.toast("Error al procesar la solicitud",3000,'rounded');                       
+                        }
+                        console.log(err);
+            });
+  };
+
+  function load(callback) {
+    if( permisos() ){
+      callback();
+    }    
+  };
+  load(getConsecutivo);
+
 	$scope.guardar = function(){
 
     var isnum1 = /^\d+$/.test($scope.reg.matricula);
     var isnum2 = /^\d+$/.test($scope.reg.stiker);
 
-    if($scope.reg.matricula.length == 0 || $scope.reg.stiker.length == 0){
+    if( $scope.reg.matricula.length == 0 || 
+        $scope.reg.stiker.length == 0 || 
+        $("#name_matri").val().length == 0 ){
+
       Materialize.toast("Complete todos los campos!!!",3000,'rounded');
 
     }else{
-        if(isnum1 && isnum2){
+        if( isnum1 && isnum2 ){
 
-          console.log($scope.reg);     
+          //console.log($scope.reg);
+            $scope.reg.razonSocial_nombre = $("#name_matri").val();     
             var promiseGet = agregarStikerService.add($scope.reg ); //The Method Call from service
             promiseGet.then(function (pl) {          
               //console.log(pl.data );
               Materialize.toast(pl.data.message,3000,'rounded');
               if( pl.data.estado == "OK" ) {
-                $("#name_matri").val('');
-                initialize();  
+                  // Inicializo los datos
+                  $scope.aux = angular.copy($scope.reg);
+                  $scope.aux.name_matri = $("#name_matri").val();
+                  $("#name_matri").val('');
+                  initialize();                   
+                  $('#modal1').openModal();                 
               }
               
             },
@@ -88,7 +124,39 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
     }
 	};
 
+  $scope.noImprimir = function(){
+    getConsecutivo();
+  };
+
+  $scope.imprimir = function(){
+              $.get("printStiker.html", function (data) {
+
+                getConsecutivo();
+
+                  data = data.replace("{{nombre}}", $scope.aux.name_matri) ;
+                  data = data.replace("{{matricula}}", $scope.aux.matricula );
+                  //console.log(data);
+
+                  // Esta es la parte que te abre la ventana de imprecion...
+                  var win;
+                  win = window.open();
+                  win.document.write(data);
+                  win.print();
+                  win.close();
+
+              });
+  };
+
+  $('input').focusout( function() {
+    $('label').addClass('active');
+  });
+
+  $('#name_matri').focusout( function() {
+     $("#name_matri").val($("#name_matri").val().toUpperCase());
+  });
+
   $( "#last_name" ).focusout(function() {
+
     if($scope.reg.matricula < 1 || isEmpty($scope.reg.matricula) ){
       $("#name_matri").val('');
       return true;
@@ -96,11 +164,15 @@ app.controller("agregarStikCtr", function($scope, agregarStikerService) {
             var promiseGet = agregarStikerService.getMatriculado({noMatricula:$scope.reg.matricula}); //The Method Call from service
             promiseGet.then(function (pl) {          
               //console.log(pl.data );
-              //Materialize.toast(pl.data.message,3000,'rounded');  
-              $("#name_matri").val(pl.data.razonSocial_nombre);
+              //Materialize.toast(pl.data.message,3000,'rounded');
+              $("#name_matri").val(pl.data.razonSocial_nombre)
+              if( $("#name_matri").val().length > 1 ) {
+                $("#name_matri").val($("#name_matri").val().toUpperCase());  
+              }
+                           
               if( isEmpty(pl.data) ){
                 Materialize.toast("Matricula no encontrada",3000,'rounded');  
-              }
+              } 
               /*
               if ( $("#name_matri").val().length > 0 ) {
                                 
