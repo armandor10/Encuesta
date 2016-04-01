@@ -3,6 +3,30 @@ app.controller("consultarCtr", function($scope, agregarlibroService,$filter, NgT
     var cargo_id_presidencia = "9";
     var cargo_id_digitalizador = "35";
 
+  function makeTree() {
+    $('#using_json_2').jstree({ 'core' : {
+      'data' : $scope.categorias
+    } });
+  };
+
+  function loadCategoria(){
+    var promiseGet = agregarlibroService.getCategorias();
+    promiseGet.then( function (pl) {
+      $scope.categorias = pl.data;
+      makeTree();
+
+    }, function (err) {
+      if(err.status == 401){
+        alert(err.data.message);
+        console.log(err.data.exception);
+      }else{
+        Materialize.toast("Error al procesar la solicitud",3000,'rounded');
+      }
+      console.log(err);
+    });
+  };
+  loadCategoria();
+
   function loadngtable(){
     //$scope.tableParams = new NgTableParams({}, { dataset: $scope.libros});
     $scope.tableParams =  new NgTableParams({
@@ -45,18 +69,36 @@ app.controller("consultarCtr", function($scope, agregarlibroService,$filter, NgT
     });
   }
 
+  function loadLibrosCategoria(id){
+    var promiseGet = agregarlibroService.getTemasxCategoria(id); /* The Method Call from service */
+    promiseGet.then(function (pl) {     
+      $scope.libros = pl.data;
+      //console.log($scope.libros);
+      loadngtable();
+
+    },function (err) {
+      if(err.status == 401){
+        alert(err.data.message);
+        console.log(err.data.exception);
+      }else{
+        Materialize.toast("Error al procesar la solicitud",3000,'rounded');
+      }
+      console.log(err);
+    });
+  }
+
   function load(callback){
       if( sessionStorage.getItem("cargo_id") == cargo_id_digitalizador ){
         window.location.href = "home.html#/agregarlibro";
         return true;
       }
-    callback();   
-    loadLibros();  
+      /*callback();   
+      loadLibros();*/  
   };
   load(loading); 
 
 	var activeItemMenu = function(){
-		for (i = 1; i <= 3; i++) { 
+		for (i = 1; i <= 4; i++) { 
 			$( "#m" + i ).removeClass( "active" );           
 		}
 		$( "#m" + 3 ).addClass( "active" );  
@@ -68,9 +110,16 @@ app.controller("consultarCtr", function($scope, agregarlibroService,$filter, NgT
   	  //createTable();
   });
 
-
-
-
+  $('#using_json_2').on('changed.jstree', function (e, data) {
+      var i, j, r = [];
+      for(i = 0, j = data.selected.length; i < j; i++) {
+        /*r.push(data.instance.get_node(data.selected[i]).text);*/
+        //console.log( data.instance.get_node(data.selected[i]) );
+        $scope.categoriaSelected = data.instance.get_node(data.selected[i]);
+      }
+      /* $('#event_result').html('Selected: ' + r.join(', ')); */
+      loadLibrosCategoria($scope.categoriaSelected.id);
+  });
 
         function isEmpty(obj) {
 

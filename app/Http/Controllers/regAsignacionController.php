@@ -152,8 +152,11 @@ class regAsignacionController extends Controller
         $data = $request->all();
         $auxVen = Auxventanilla::where('noDocumento','=',$data['noDocumento'])->first();
         $reg = DB::connection('mysql')
-                ->select("SELECT max(stiker) as max FROM registro_asignacion where idAuxVentanilla=".$auxVen->id
-                        . " && YEAR(fecha) <= YEAR(now())");
+                ->select("SELECT stiker as max 
+                            FROM registro_asignacion 
+                            where idAuxVentanilla=".$auxVen->id.
+                            " and YEAR(fecha) <= YEAR(now())
+                            order by cast(stiker as unsigned) desc limit 1");
         return intval($reg[0]->max) +1;        
     }
         public function getRegistroAuxFecha(Request $request){

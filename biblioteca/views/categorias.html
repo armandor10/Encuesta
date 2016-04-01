@@ -1,0 +1,33 @@
+<div class="row" style="margin: 3%;">
+
+	<div class="input-field col s4" style="margin-top:0%;margin-bottom:0%">
+		<input ng-model="categoria.text" id="first_name" type="text" class="validate">
+		<label class="active" for="first_name">Categoría</label>
+	</div>
+
+	<div class="col s2">
+		<a class="waves-effect waves-light btn green lighten-1" ng-click="openModalCategoria()"><i class="material-icons left">create_new_folder</i></a>
+	</div>
+
+	<div class="col s6">
+		<div id="using_json_2"></div>
+	</div>	
+
+</div>
+
+
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+		<a ng-click="deleteCategoria()" class="waves-effect waves-light btn btn-floating btn-large red"><i class="material-icons left">delete</i>eliminar</a>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="mCategoria" class="modal">
+    <div class="modal-content">
+      <h4>Categoría raiz?</h4>
+    </div>
+    <div class="modal-footer">
+      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">salir</a>    	
+      <a ng-click="saveCategoria('N')" href="" class=" modal-action modal-close waves-effect waves-green btn-flat">no</a>    	
+      <a ng-click="saveCategoria('S')" href="" class=" modal-action modal-close waves-effect waves-green btn-flat">si</a>
+    </div>
+  </div>

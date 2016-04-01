@@ -20,7 +20,7 @@ app.controller("agregarlibroCtr", function($scope, agregarlibroService,$filter, 
 	};
 
 	var activeItemMenu = function(){
-		for (i = 1; i <= 3; i++) { 
+		for (i = 1; i <= 4; i++) { 
 			$( "#m" + i ).removeClass( "active" );           
 		}
 		$( "#m" + 1 ).addClass( "active" );  

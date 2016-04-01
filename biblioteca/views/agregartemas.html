@@ -38,11 +38,11 @@
   </div>
 
   <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
+  <div id="modal1" class="modal modal-fixed-footer" style="width:80%">
     <div class="modal-content">
       <h4>Libro: {{libroSelected.titulo}} </h4>
       <div class="row">
-        <form class="col s12">
+        <form class="col s6">
           <div class="row">
             <div class="input-field col s12">
               <input ng-model="temaSelected.tema" id="disabled" type="text" class="validate">
@@ -56,6 +56,9 @@
             </div>
           </div>
         </form>
+        <div class="col s6">
+          <div id="using_json_2"></div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">

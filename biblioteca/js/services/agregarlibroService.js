@@ -45,4 +45,24 @@ app.service("agregarlibroService", function ($http) {
         return req;
     };
 
+    this.getCategorias = function() {
+        var req = $http.get( uritimeit + '/Biblioteca/Categoria' ); 
+        return req;
+    };
+
+    this.getTemasxCategoria = function(id) {
+        var req = $http.get( uritimeit + '/Biblioteca/Categoria/' + id ); 
+        return req;
+    };
+
+    this.addCategoria = function(categoria) {
+        var req = $http.post(uritimeit + '/Biblioteca/Categoria', categoria); 
+        return req;
+    };
+
+    this.deleteCategoria= function(id) {
+        var req = $http.delete(uritimeit + '/Biblioteca/Categoria/'+ id);
+        return req;
+    };
+
 });

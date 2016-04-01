@@ -31,6 +31,10 @@ app.config(function($routeProvider) {
     controller: 'consultarCtr',
     templateUrl: 'views/consultar.html'
   })
+   .when('/categorias', {
+    controller: 'categoriasCtr',
+    templateUrl: 'views/categorias.html'
+  })
   .otherwise({
     redirectTo: '/agregarlibro'
   });
