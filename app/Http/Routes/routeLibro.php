@@ -2,6 +2,7 @@
 
 Route::get('Biblioteca/Categoria','LibroController@getCategoria');
 Route::get('Biblioteca/Categoria/{id}','LibroController@getTemasxCategoria');
+Route::post('Biblioteca/bCategoria','LibroController@getTemasxCategoria2');
 Route::post('Biblioteca/Categoria','LibroController@storeCategoria');
 Route::delete('Biblioteca/Categoria/{id}','LibroController@destroyCategoria');
 

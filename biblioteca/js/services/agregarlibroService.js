@@ -55,6 +55,11 @@ app.service("agregarlibroService", function ($http) {
         return req;
     };
 
+    this.getTemasxCategoria2 = function(obj) {
+        var req = $http.post( uritimeit + '/Biblioteca/bCategoria', obj ); 
+        return req;
+    };
+
     this.addCategoria = function(categoria) {
         var req = $http.post(uritimeit + '/Biblioteca/Categoria', categoria); 
         return req;

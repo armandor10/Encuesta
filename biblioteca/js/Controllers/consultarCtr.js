@@ -1,7 +1,13 @@
 app.controller("consultarCtr", function($scope, agregarlibroService,$filter, NgTableParams) {
   $scope.libros = [];
-    var cargo_id_presidencia = "9";
-    var cargo_id_digitalizador = "35";
+  var cargo_id_presidencia = "9";
+  var cargo_id_digitalizador = "35";
+
+  /* Inicializo la categoria seleccionada */
+  $scope.categoriaSelected = {};
+  $scope.categoriaSelected. id = "";
+  $scope.filtro = "";
+
 
   function makeTree() {
     $('#using_json_2').jstree({ 'core' : {
@@ -85,6 +91,45 @@ app.controller("consultarCtr", function($scope, agregarlibroService,$filter, NgT
       }
       console.log(err);
     });
+  };
+
+  $scope.todasCategorias = function () {
+    $('#using_json_2').jstree("deselect_all");
+  }
+
+  $scope.BuscarTema = function() {
+    loading();
+    /*alert("Hola");*/
+    var obj = {};
+    if( isEmpty($scope.filtro) ){
+      $scope.filtro = "";
+    }
+    obj.clave = $scope.filtro;
+    obj.id = $scope.categoriaSelected.id; /* Id de la categoria a buscar  */
+
+    //console.log(obj);
+
+    var promiseGet = agregarlibroService.getTemasxCategoria2(obj); /* The Method Call from service */
+    promiseGet.then(function (pl) {     
+      $scope.libros = pl.data;
+      //console.log($scope.libros);
+      loadngtable();
+      $('#loading').closeModal();      
+
+    },function (err) {
+      if(err.status == 401){
+        alert(err.data.message);
+        console.log(err.data.exception);
+      }else{
+        Materialize.toast("Error al procesar la solicitud",3000,'rounded');
+      }
+      console.log(err);
+      $('#loading').closeModal();
+    });    
+  };
+
+  $scope.quitarFiltro = function () {
+    $scope.filtro = "";
   }
 
   function load(callback){
@@ -118,27 +163,27 @@ app.controller("consultarCtr", function($scope, agregarlibroService,$filter, NgT
         $scope.categoriaSelected = data.instance.get_node(data.selected[i]);
       }
       /* $('#event_result').html('Selected: ' + r.join(', ')); */
-      loadLibrosCategoria($scope.categoriaSelected.id);
+      /*loadLibrosCategoria($scope.categoriaSelected.id);*/
+      $scope.BuscarTema();
   });
 
-        function isEmpty(obj) {
+  function isEmpty(obj) {
+    // null and undefined are "empty"
+    if (obj == null) return true;
 
-            // null and undefined are "empty"
-            if (obj == null) return true;
+     // Assume if it has a length property with a non-zero value
+     // that that property is correct.
+     if (obj.length > 0)    return false;
+     if (obj.length === 0)  return true;
 
-            // Assume if it has a length property with a non-zero value
-            // that that property is correct.
-            if (obj.length > 0)    return false;
-            if (obj.length === 0)  return true;
+     // Otherwise, does it have any properties of its own?
+     // Note that this doesn't handle
+     // toString and valueOf enumeration bugs in IE < 9
+     for (var key in obj) {
+      if (hasOwnProperty.call(obj, key)) return false;
+    }
 
-            // Otherwise, does it have any properties of its own?
-            // Note that this doesn't handle
-            // toString and valueOf enumeration bugs in IE < 9
-            for (var key in obj) {
-                if (hasOwnProperty.call(obj, key)) return false;
-            }
-
-            return true;
-        };
+    return true;
+  };
 
 });

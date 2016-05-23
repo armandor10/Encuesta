@@ -1,24 +1,33 @@
-<div class="row" style="margin: 1%">
+﻿<div class="row" style="margin: 1%">
 
-	<h3>Consulta de Libros</h3>
+	<h4>Consulta de Libros</h4>
+  <div class="row">    
+    <div class="input-field col s5 offset-s3" style="margin-top:0%">
+      <input id="search" type="search" required ng-model="filtro" my-enter="BuscarTema()">
+      <i class="material-icons" ng-click="quitarFiltro()">close</i>
+    </div>
+  <div class="col s3">
+    <a href="" title="" class="waves-effect waves-light btn" ng-click="BuscarTema()">
+      <i class="material-icons left">search</i> Buscar
+    </a>    
+  </div>  
+  </div>
   <div class="row">
     <div class="col s6">
+        <a style="margin-bottom: 2%" class="waves-effect waves-light btn" ng-click="todasCategorias()" >todas</a>
         <div id="using_json_2"></div>
     </div>
     <div class="col s6">
         <table ng-table="tableParams" class="table bordered striped highlight responsive-table" show-filter="true">
           <tbody>
             <tr ng-repeat="t in data" >
-              <td data-title="'Código'"  sortable="'codigo'" filter="{ 'codigo': 'text' }"> {{t.codigo}} </td>
-              <td data-title="'Libro'"  sortable="'titulo'" filter="{ 'titulo': 'text' }"> {{t.titulo}} </td>
-              <td data-title="'Tema'"  sortable="'tema'" filter="{ 'tema': 'text' }"> {{t.tema}} </td>
-              <td data-title="'Pagina'"  sortable="'pagina'" filter="{ 'pagina': 'text' }"> {{t.pagina}} </td>
+              <td data-title="'Código'"  sortable="'codigo'" > {{t.codigo}} </td>
+              <td data-title="'Libro'"  sortable="'titulo'" > {{t.titulo}} </td>
+              <td data-title="'Tema'"  sortable="'tema'" > {{t.tema}} </td>
+              <td data-title="'Pagina'"  sortable="'pagina'" > {{t.pagina}} </td>
             </tr>
           </tbody>
         </table>
     </div>
   </div>
-
-
-
 </div>

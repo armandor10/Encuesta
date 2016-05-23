@@ -207,7 +207,7 @@ app.controller("agregartemaCtr", function($scope, agregarlibroService,$filter, N
 
 		$('#using_json_2').jstree("deselect_all");
 
-		console.log($scope.temaSelected.categoria);
+		/* console.log($scope.temaSelected.categoria); */
 
 		$scope.temaSelected.nuevo = nuevo;
 		if( !isEmpty( $scope.temaSelected.categoria ) ) {

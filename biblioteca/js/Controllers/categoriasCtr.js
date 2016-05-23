@@ -104,18 +104,23 @@ app.controller("categoriasCtr", function( $scope, agregarlibroService) {
 				var promiseGet = agregarlibroService.deleteCategoria( $scope.categoriaSelected.id );
 				promiseGet.then( function (pl) {
 
-				var aux = $.grep( $scope.categorias , function( item, index1) {
+				if( pl.data.state == "OK" ) {
+					var aux = $.grep( $scope.categorias , function( item, index1) {
 					if( item.id == $scope.categoriaSelected.id) {
 						item.index = index1;
 						return true;
-					}
-				})[0];
-				$scope.categorias.splice(aux.index, 1);
+						}
+					} ) [0];
+					deleteCategoriasChild(aux.id);
+					$scope.categorias.splice(aux.index, 1);
 
-				$('#using_json_2').jstree(true).settings.core.data = $scope.categorias;
-				$('#using_json_2').jstree(true).refresh();
-				
-				Materialize.toast( pl.data.message ,3000,'rounded');
+					console.log($scope.categorias);
+
+					$('#using_json_2').jstree(true).settings.core.data = $scope.categorias;
+					$('#using_json_2').jstree(true).refresh();
+				}
+
+				Materialize.toast( pl.data.message ,4000,'rounded');
 
 				}, function (err) {
 					if(err.status == 401){
@@ -127,6 +132,28 @@ app.controller("categoriasCtr", function( $scope, agregarlibroService) {
 					console.log(err);
 				});
 			}
+	};
+
+	function deleteCategoriasChild (id) {
+		var aux = $.grep( $scope.categorias , function( item, index1) {
+			return item.parent == id ;
+		});
+
+		if( !isEmpty(aux) ) {
+			// Hacer un foreach y call deletecategChild
+			angular.forEach(aux, function(value, key) {
+
+				deleteCategoriasChild(value.id)
+				var aux1 = $.grep( $scope.categorias , function( item, index1) {
+					if( item.id == value.id) {
+						item.index = index1;
+							return true;
+						}
+					} ) [0];
+				$scope.categorias.splice(aux1.index, 1);
+
+			});
+		}
 	};
 
         function isEmpty(obj) {
@@ -148,24 +175,5 @@ app.controller("categoriasCtr", function( $scope, agregarlibroService) {
 
             return true;
         };
-
-			/*$('#using_json_2').jstree({ 'core' : {
-			    'data' : [
-			       { "id" : "ajson1", "parent" : "#", "text" : "Conceptos" },
-			       { "id" : "ajson5", "parent" : "ajson1", "text" : "Confecamaras" },
-			       { "id" : "ajson6", "parent" : "ajson1", "text" : "Superintendencia" },	       	       
-			       { "id" : "ajson7", "parent" : "ajson1", "text" : "Contraloría" },	       	       
-			       { "id" : "ajson2", "parent" : "#", "text" : "Auditorias" },
-			       { "id" : "ajson3", "parent" : "ajson2", "text" : "Informe de Auditoria" },
-			       { "id" : "ajson4", "parent" : "ajson2", "text" : "Informe final de auditoria gubernamental" },
-			       { "id" : "ajson8", "parent" : "ajson2", "text" : "Programa de desarrollo y paz del cesar" },
-			       { "id" : "ajson9", "parent" : "ajson2", "text" : "Plan operativo anual 2013" },
-			       { "id" : "ajson10", "parent" : "ajson2", "text" : "Observaciones proceso auditorio" },
-			       { "id" : "ajson11", "parent" : "#", "text" : "Consejo de estado (sala contencioso administrativo)" },
-			       { "id" : "ajson12", "parent" : "ajson11", "text" : "Recursos de apelación" },
-			       { "id" : "ajson13", "parent" : "ajson11", "text" : "Acto administrativo" },
-			       { "id" : "ajson14", "parent" : "ajson11", "text" : "Acción popular" },
-			    ]
-			} });*/
 
 });

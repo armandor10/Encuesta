@@ -1,4 +1,4 @@
-<?php 
+<?php
 header("Content-type: image/gif"); 
 if(isset($_GET['id'])){ 
     $id = $_GET['id']; 
@@ -9,12 +9,13 @@ if(isset($_GET['id'])){
     $result = mysql_query($q, $link) or die ("Error al consultar"); 
      
     while ($row = mysql_fetch_assoc($result)) { 
-    echo $row["foto"]; 
+
+        echo $row["foto"]; 
+
     } 
     mysql_free_result($result); 
     } else { 
         echo 'NO ID'; 
     }  
-    mysql_close($link);
   
 ?>

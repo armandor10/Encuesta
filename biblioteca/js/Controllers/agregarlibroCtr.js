@@ -202,10 +202,10 @@ app.controller("agregarlibroCtr", function($scope, agregarlibroService,$filter, 
                               });
 	};
 
-  $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-  	//createTable();
-	$('#loading').closeModal();
-  });
+	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+	  	//createTable();
+		/*$('#loading').closeModal();*/
+	});
   
 	function createdatepicker(){
 	  input = $('.datepicker').pickadate({

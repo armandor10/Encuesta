@@ -18,11 +18,13 @@ class LibroController extends Controller
 {
     public function index()
     {
-        return Libro::all();
+        return DB::connection('biblioteca')
+                ->select("SELECT * FROM biblioteca.libro ORDER BY CAST(SUBSTRING(codigo,LOCATE(' ',codigo)+4) AS SIGNED);");
     }
     
     public function getLibrosandTemas(){
-        $libros = Libro::all();
+        $libros = DB::connection('biblioteca')
+                ->select("SELECT * FROM biblioteca.libro ORDER BY CAST(SUBSTRING(codigo,LOCATE(' ',codigo)+4) AS SIGNED);");
         foreach ($libros as &$value) {
             $temas =  DB::connection('biblioteca')
                 ->select("select t.*,tc.categoria from tema as t 
@@ -171,14 +173,15 @@ class LibroController extends Controller
     public function destroyCategoria($id){
         try {
             if( $this->BuscarCategoria($id) || $this->BuscarCategoraChild($id) ){
-                return JsonResponse::create(array('message' => "No se pudo Eliminar la categoría o subcategoría porque "
+                return JsonResponse::create(array("state"=>"KO",'message' => "No se pudo Eliminar la categoría o subcategoría porque "
                     . "tiene asignado uno o varios temas asignados", 
                     "request" => null), 201); 
                 
             } else {
+                $this->destroyCategoriaChild($id);
                 $categoria = Categoria::find($id);
                 $categoria->delete();
-                return JsonResponse::create(array('message' => "Categoría Eliminada Correctamente", 
+                return JsonResponse::create(array("state"=>"OK",'message' => "Categoría Eliminada Correctamente", 
                     "request" => null), 201); 
                 
             }           
@@ -189,6 +192,18 @@ class LibroController extends Controller
         
     }
     
+    public function destroyCategoriaChild($id){
+        $categoria = DB::connection('biblioteca')->select("SELECT * FROM categoria"
+                    . " where parent='".$id."'");
+        if( ! empty($categoria) ){
+            foreach ($categoria as &$value) {
+                $this->destroyCategoriaChild($value->id);
+                $cat = Categoria::find($value->id);
+                $cat->delete();
+            }            
+        }                       
+    }
+
     public function BuscarCategoria($id){        
         $categoriaTema = DB::connection('biblioteca')->select("SELECT * FROM temas_categoria"
                     . " where categoria='".$id."' limit 1");
@@ -196,10 +211,10 @@ class LibroController extends Controller
             return true;
         }
         
-        $categoria = Categoria::find($id);
+        /*$categoria = Categoria::find($id);
         if ($categoria->parent != '#') {
             return $this->BuscarCategoria($categoria->parent);        
-        }
+        }*/
         
         return false;  
     }
@@ -258,5 +273,60 @@ class LibroController extends Controller
         }
         return $tema;
     }
+    
+    public function getTemasxCategoria2(Request $request){
+            $data = $request->all();
+            
+            if( empty($data["id"]) ) {
+                $t = DB::connection('biblioteca')->select("select t.*,tc.categoria,l.codigo,l.titulo
+                                        from tema as t 
+                                        inner join temas_categoria as tc on tc.tema=t.id 
+                                        inner join libro as l on l.id=t.libro 
+                                        where t.tema like '%".$data["clave"]."%'");
+                return $t;                
+            } else {
+                $t = DB::connection('biblioteca')->select("select t.*,tc.categoria,l.codigo,l.titulo
+                                        from tema as t 
+                                        inner join temas_categoria as tc on tc.tema=t.id 
+                                        inner join libro as l on l.id=t.libro 
+                                        where categoria=".$data["id"]
+                                        ." and t.tema like '%".$data["clave"]."%'");                
+            }
+
+            $tema = array();
+
+            if( !empty($t) ){
+                foreach ($t as &$value) {
+                    array_push( $tema, $value);                                
+                }            
+            }
+            //return $tema;
+            return $this->getChildCategoria2( $data, $data["id"] , $tema);
+        }
+
+    public function getChildCategoria2(&$data, &$id ,&$tema){
+            $categoria = DB::connection('biblioteca')->select("SELECT * FROM categoria"
+                        . " where parent='".$id."'");
+            //return $categoria;
+            if( ! empty($categoria) ){
+                foreach ($categoria as &$value) {
+                    $t = DB::connection('biblioteca')
+                                        ->select("select t.*,tc.categoria,l.codigo,l.titulo
+                                            from tema as t 
+                                            inner join temas_categoria as tc on tc.tema=t.id 
+                                            inner join libro as l on l.id=t.libro 
+                                            where categoria=".$value->id
+                                            ." and t.tema like '%".$data["clave"]."%'");
+                    if( !empty($t) ){
+                        foreach ($t as &$val) {
+                            array_push( $tema, $val);                                
+                        }            
+                    }
+                    //return 
+                    $this->getChildCategoria2($data ,$value->id, $tema); 
+                }            
+            }
+            return $tema;
+        }
 
 }
